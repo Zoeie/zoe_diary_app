@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">ZoeDiary</string>
+
+    <string name="common_connect_error">Abnormal network connection</string>
+    <string name="common_net_error">Network anomaly</string>
+    <string name="common_connect_timeout">Connection timeout</string>
+    <string name="common_request_timeout">Request timed out</string>
+    <string name="common_parse_error">Parse error</string>
+    <string name="diary_menu_str">首页</string>
+    <string name="diary_add_str">添加</string>
+    <string name="diary_my_str">我的</string>
+</resources>

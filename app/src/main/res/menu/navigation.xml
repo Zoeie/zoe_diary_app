@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@mipmap/diary_menu_icon"
+        android:title="@string/diary_menu_str" />
+
+    <item
+        android:id="@+id/navigation_buy"
+        android:icon="@mipmap/diary_add_icon"
+        android:title="@string/diary_add_str" />
+
+    <item
+        android:id="@+id/navigation_user"
+        android:icon="@mipmap/diary_my_icon"
+        android:title="@string/diary_my_str" />
+</menu>
