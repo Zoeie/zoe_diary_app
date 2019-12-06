@@ -1,7 +1,7 @@
 package com.zoe.diary.net.request.diary;
 
 import com.zoe.diary.net.base.DiaryBaseModel;
-import com.zoe.diary.net.response.DiaryResponse;
+import com.zoe.diary.net.response.DiaryListResponse;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -15,7 +15,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class DiaryModel extends DiaryBaseModel {
 
-    public Observable<DiaryResponse> getAllDiary() {
+    public Observable<DiaryListResponse> getAllDiary() {
         return doRxRequest().list()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());

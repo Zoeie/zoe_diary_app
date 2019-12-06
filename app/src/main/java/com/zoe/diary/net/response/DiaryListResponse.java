@@ -10,6 +10,6 @@ import java.util.List;
  * created 2019/12/5 14:39
  */
 
-public class DiaryResponse extends BaseResponse {
+public class DiaryListResponse extends BaseResponse {
     public List<DiaryInfo> data;
 }

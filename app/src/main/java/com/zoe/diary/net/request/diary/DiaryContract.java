@@ -1,7 +1,7 @@
 package com.zoe.diary.net.request.diary;
 
 import com.zoe.diary.net.contract.IContract;
-import com.zoe.diary.net.response.DiaryResponse;
+import com.zoe.diary.net.response.DiaryListResponse;
 
 /**
  * author zoe
@@ -15,7 +15,7 @@ public interface DiaryContract {
     }
 
     interface IView extends IContract.IView {
-        void onAllDiarySuccess(DiaryResponse response);
+        void onAllDiarySuccess(DiaryListResponse response);
         void onAllDiaryFailed();
     }
 }

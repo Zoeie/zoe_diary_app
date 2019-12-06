@@ -1,5 +1,6 @@
 package com.zoe.diary;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -10,11 +11,13 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.zoe.diary.net.request.diary.DiaryContract;
 import com.zoe.diary.net.request.diary.DiaryPresenter;
-import com.zoe.diary.net.response.DiaryResponse;
+import com.zoe.diary.net.response.DiaryListResponse;
+import com.zoe.diary.ui.activity.DiaryEditActivity;
 import com.zoe.diary.ui.activity.base.BaseMVPActivity;
 import com.zoe.diary.ui.fragment.DiaryFragment;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class DiaryActivity extends BaseMVPActivity<DiaryPresenter, DiaryContract.IView> implements DiaryContract.IView {
 
@@ -78,7 +81,7 @@ public class DiaryActivity extends BaseMVPActivity<DiaryPresenter, DiaryContract
     }
 
     private void initData() {
-        mPresenter.getAllDiary();
+        //mPresenter.getAllDiary();
     }
 
     @Override
@@ -87,7 +90,7 @@ public class DiaryActivity extends BaseMVPActivity<DiaryPresenter, DiaryContract
     }
 
     @Override
-    public void onAllDiarySuccess(DiaryResponse response) {
+    public void onAllDiarySuccess(DiaryListResponse response) {
 
     }
 
@@ -106,5 +109,10 @@ public class DiaryActivity extends BaseMVPActivity<DiaryPresenter, DiaryContract
         }
         //根据角标将fragment显示出来
         transaction.show(fragmentList[index]).commitAllowingStateLoss();
+    }
+
+    @OnClick(R.id.btn_test)
+    public void click() {
+        startActivity(new Intent(this, DiaryEditActivity.class));
     }
 }

@@ -7,7 +7,7 @@ package com.zoe.diary.constant;
 
 public class WebConfig {
 
-    ////通过ip地址访问，需要关闭防火墙
-    public static final String BASE_URL = "http://192.168.199.173:8080/";
+    //通过ip地址访问，需要关闭防火墙
+    public static final String BASE_URL = "http://280521is72.wicp.vip/";
 
 }

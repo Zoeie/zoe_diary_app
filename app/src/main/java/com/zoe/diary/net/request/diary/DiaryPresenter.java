@@ -2,7 +2,7 @@ package com.zoe.diary.net.request.diary;
 
 import com.zoe.diary.net.base.BasePresenter;
 import com.zoe.diary.net.base.RxObserver;
-import com.zoe.diary.net.response.DiaryResponse;
+import com.zoe.diary.net.response.DiaryListResponse;
 
 /**
  * author zoe
@@ -15,9 +15,9 @@ public class DiaryPresenter extends BasePresenter<DiaryContract.IView> implement
 
     @Override
     public void getAllDiary() {
-        RxObserver<DiaryResponse> observer = new RxObserver<DiaryResponse>() {
+        RxObserver<DiaryListResponse> observer = new RxObserver<DiaryListResponse>() {
             @Override
-            protected void onSuccess(DiaryResponse response) {
+            protected void onSuccess(DiaryListResponse response) {
                 getView().onAllDiarySuccess(response);
             }
 
