@@ -41,17 +41,12 @@ public class SaveModel extends DiaryBaseModel {
                                                    int weather, int mood, String location, Date date, List<String> tags) {
         MultipartBody.Builder builder = new MultipartBody.Builder();
         for (String fileName : imgPaths) {
-            builder.addFormDataPart("imgFile",fileName,getRequestBody(new File(fileName)));
+            builder.addFormDataPart("imgFile", fileName, getRequestBody(new File(fileName)));
         }
-        StringBuilder stringBuilder = new StringBuilder();
-        for (int i = 0;i < tags.size();i++) {
-            stringBuilder.append(tags.get(i));
-            if(i < tags.size() -1) {
-                stringBuilder.append(",");
-            }
+        for (int i = 0; i < tags.size(); i++) {
+            builder.addFormDataPart("tag", tags.get(i));
         }
         String dateStr = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(date);
-        LogUtil.d("dateStr:"+dateStr+",stringBuilder:"+stringBuilder.toString());
         RequestBody body = builder
                 .addFormDataPart("title", title)
                 .addFormDataPart("content", content)
@@ -59,7 +54,6 @@ public class SaveModel extends DiaryBaseModel {
                 .addFormDataPart("mood", String.valueOf(mood))
                 .addFormDataPart("location", location)
                 .addFormDataPart("date", dateStr)
-                .addFormDataPart("tag", stringBuilder.toString())
                 .build();
         return doRxRequest().save(body)
                 .subscribeOn(Schedulers.io())

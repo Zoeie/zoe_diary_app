@@ -13,6 +13,7 @@ import android.widget.GridView;
 import android.widget.Toast;
 
 import com.zoe.diary.R;
+import com.zoe.diary.constant.Constants;
 import com.zoe.diary.ui.adapter.DiaryIconAdapter;
 
 import butterknife.BindView;
@@ -26,16 +27,16 @@ public class BottomDialogView extends Dialog implements AdapterView.OnItemClickL
     @BindView(R.id.grid_weather)
     GridView gridWeather;
 
-    private static final int[] moodArr = new int[] {
-        R.mipmap.mood_smile,R.mipmap.mood_smile,R.mipmap.mood_smile,R.mipmap.mood_smile,
-        R.mipmap.mood_smile,R.mipmap.mood_smile,R.mipmap.mood_smile,R.mipmap.mood_smile,
-        R.mipmap.mood_smile,R.mipmap.mood_smile,R.mipmap.mood_smile,R.mipmap.mood_smile,
+    private static final int[] moodArr = new int[]{
+            R.mipmap.mood_smile, R.mipmap.mood_smile, R.mipmap.mood_smile, R.mipmap.mood_smile,
+            R.mipmap.mood_smile, R.mipmap.mood_smile, R.mipmap.mood_smile, R.mipmap.mood_smile,
+            R.mipmap.mood_smile, R.mipmap.mood_smile, R.mipmap.mood_smile, R.mipmap.mood_smile,
     };
 
-    private static final int[] weatherArr = new int[] {
-        R.mipmap.weather_cloudy, R.mipmap.weather_cloudy,R.mipmap.weather_cloudy,R.mipmap.weather_cloudy,
-        R.mipmap.weather_cloudy, R.mipmap.weather_cloudy,R.mipmap.weather_cloudy,R.mipmap.weather_cloudy,
-        R.mipmap.weather_cloudy, R.mipmap.weather_cloudy,R.mipmap.weather_cloudy,R.mipmap.weather_cloudy,
+    private static final int[] weatherArr = new int[]{
+            R.mipmap.weather_cloudy, R.mipmap.weather_cloudy, R.mipmap.weather_cloudy, R.mipmap.weather_cloudy,
+            R.mipmap.weather_cloudy, R.mipmap.weather_cloudy, R.mipmap.weather_cloudy, R.mipmap.weather_cloudy,
+            R.mipmap.weather_cloudy, R.mipmap.weather_cloudy, R.mipmap.weather_cloudy, R.mipmap.weather_cloudy,
     };
 
     private Context context;
@@ -56,8 +57,8 @@ public class BottomDialogView extends Dialog implements AdapterView.OnItemClickL
     }
 
     private void initView() {
-        gridMood.setAdapter(new DiaryIconAdapter(context,moodArr));
-        gridWeather.setAdapter(new DiaryIconAdapter(context,weatherArr));
+        gridMood.setAdapter(new DiaryIconAdapter(context, moodArr));
+        gridWeather.setAdapter(new DiaryIconAdapter(context, weatherArr));
         gridMood.setOnItemClickListener(this);
         gridWeather.setOnItemClickListener(this);
     }
@@ -75,10 +76,25 @@ public class BottomDialogView extends Dialog implements AdapterView.OnItemClickL
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if(parent.getId() == R.id.grid_mood) {
-            Toast.makeText(context,"表情："+ position,Toast.LENGTH_SHORT).show();
-        } else if(parent.getId() == R.id.grid_weather) {
-            Toast.makeText(context,"天气："+ position,Toast.LENGTH_SHORT).show();
+        int type = Constants.TYPE.MOOD;
+        if (parent.getId() == R.id.grid_mood) {
+            type = Constants.TYPE.MOOD;
+        } else if (parent.getId() == R.id.grid_weather) {
+            type = Constants.TYPE.WEATHER;
         }
+        if (onDialogItemClickListener != null) {
+            onDialogItemClickListener.onItemClick(type, position);
+        }
+        dismiss();
+    }
+
+    private OnDialogItemClickListener onDialogItemClickListener;
+
+    public void setOnDialogItemClickListener(OnDialogItemClickListener listener) {
+        onDialogItemClickListener = listener;
+    }
+
+    public interface OnDialogItemClickListener {
+        void onItemClick(int type, int pos); //点击的类型，点击的位置
     }
 }

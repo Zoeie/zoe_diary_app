@@ -67,8 +67,9 @@
             </RelativeLayout>
 
             <EditText
+                android:id="@+id/et_input_title"
                 android:gravity="center"
-                android:hint="title"
+                android:hint="Title"
                 android:padding="10dp"
                 android:textSize="24sp"
                 android:textColor="@android:color/black"
@@ -119,6 +120,7 @@
             </LinearLayout>
 
             <EditText
+                android:id="@+id/et_input_content"
                 android:padding="10dp"
                 android:hint="写下你的今天"
                 android:singleLine="true"

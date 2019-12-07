@@ -1,5 +1,7 @@
 package com.zoe.diary.net.response.info;
 
+import java.util.List;
+
 /**
  * author zoe
  * created 2019/12/5 14:39
@@ -14,7 +16,7 @@ public class DiaryInfo {
     public int mood; //心情
     public String location;//定位
     public String date; //日期
-    public String tag; //标签
+    public List<String> tag; //标签
     public String img; //图片
 
     @Override
