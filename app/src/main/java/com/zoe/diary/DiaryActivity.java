@@ -15,6 +15,8 @@ import com.zoe.diary.net.response.DiaryListResponse;
 import com.zoe.diary.ui.activity.DiaryEditActivity;
 import com.zoe.diary.ui.activity.base.BaseMVPActivity;
 import com.zoe.diary.ui.fragment.DiaryFragment;
+import com.zoe.diary.ui.fragment.MyFragment;
+import com.zoe.diary.utils.LogUtil;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -33,21 +35,20 @@ public class DiaryActivity extends BaseMVPActivity<DiaryPresenter, DiaryContract
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
+                    LogUtil.d("navigation_home lastFragment:" + lastFragment);
                     if (lastFragment != 0) {
                         switchFragment(lastFragment, 0);
                         lastFragment = 0;
                     }
                     return true;
                 case R.id.navigation_buy:
+                    startActivity(new Intent(DiaryActivity.this, DiaryEditActivity.class));
+                    return true;
+                case R.id.navigation_user:
+                    LogUtil.d("navigation_user lastFragment:" + lastFragment);
                     if (lastFragment != 1) {
                         switchFragment(lastFragment, 1);
                         lastFragment = 1;
-                    }
-                    return true;
-                case R.id.navigation_user:
-                    if (lastFragment != 2) {
-                        switchFragment(lastFragment, 2);
-                        lastFragment = 2;
                     }
                     return true;
             }
@@ -68,15 +69,14 @@ public class DiaryActivity extends BaseMVPActivity<DiaryPresenter, DiaryContract
     }
 
     private void initView() {
-        Fragment headFragment = DiaryFragment.getInstance("Fragment 一");
-        Fragment orderFragment = DiaryFragment.getInstance("Fragment 二");
-        Fragment userFragment = DiaryFragment.getInstance("Fragment 三");
-        fragmentList = new Fragment[]{headFragment, orderFragment, userFragment};
+        Fragment diaryFragment = DiaryFragment.getInstance("Fragment Diary");
+        Fragment myFragment = MyFragment.getInstance("Fragment My");
+        fragmentList = new Fragment[]{diaryFragment, myFragment};
         lastFragment = 0;
         //为navigationView设置点击事件
         navigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         //设置默认页面为headFragment
-        getSupportFragmentManager().beginTransaction().replace(R.id.fl_main, headFragment).show(headFragment).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fl_main, diaryFragment).show(diaryFragment).commit();
         navigationView.setSelectedItemId(R.id.navigation_home);
     }
 
@@ -107,12 +107,8 @@ public class DiaryActivity extends BaseMVPActivity<DiaryPresenter, DiaryContract
         if (!fragmentList[index].isAdded()) {
             transaction.add(R.id.fl_main, fragmentList[index]);
         }
+        LogUtil.d("lastFragment:" + lastFragment + ",index:" + index);
         //根据角标将fragment显示出来
         transaction.show(fragmentList[index]).commitAllowingStateLoss();
-    }
-
-    @OnClick(R.id.btn_test)
-    public void click() {
-        startActivity(new Intent(this, DiaryEditActivity.class));
     }
 }

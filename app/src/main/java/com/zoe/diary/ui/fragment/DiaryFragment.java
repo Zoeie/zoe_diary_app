@@ -26,9 +26,6 @@ import butterknife.BindView;
 
 public class DiaryFragment extends BaseFragment {
 
-    @BindView(R.id.tv_text)
-    TextView tvText;
-
     @BindView(R.id.view_pager)
     ViewPager viewPager;
 
@@ -74,10 +71,10 @@ public class DiaryFragment extends BaseFragment {
     }
 
     private void initView() {
-        tvText.setText(tag);
         viewPager.setOffscreenPageLimit(3);
         viewPager.setPageTransformer(false, new DiaryPageTranform());
         DiaryAdapter diaryAdapter = new DiaryAdapter(getChildFragmentManager(), fragmentList);
         viewPager.setAdapter(diaryAdapter);
+        viewPager.setCurrentItem(Calendar.getInstance().get(Calendar.MONTH));
     }
 }
