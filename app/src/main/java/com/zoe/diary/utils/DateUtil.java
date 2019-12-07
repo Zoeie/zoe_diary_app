@@ -1,5 +1,7 @@
 package com.zoe.diary.utils;
 
+import java.util.Calendar;
+
 /**
  * author zoe
  * created 2019/12/6 17:09
@@ -37,4 +39,23 @@ public class DateUtil {
         return "";
     }
 
+    public static String convertNumberToWeek(int dayOfWeek) {
+        switch (dayOfWeek) {
+            case Calendar.SUNDAY:
+                return "星期天";
+            case Calendar.MONDAY:
+                return "星期一";
+            case Calendar.TUESDAY:
+                return "星期二";
+            case Calendar.WEDNESDAY:
+                return "星期三";
+            case Calendar.THURSDAY:
+                return "星期四";
+            case Calendar.FRIDAY:
+                return "星期五";
+            case Calendar.SATURDAY:
+                return "星期六";
+        }
+        return "";
+    }
 }

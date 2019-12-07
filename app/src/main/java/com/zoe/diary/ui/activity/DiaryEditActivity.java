@@ -2,6 +2,7 @@ package com.zoe.diary.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import androidx.viewpager.widget.ViewPager;
 
@@ -15,10 +16,13 @@ import com.zoe.diary.net.request.save.SavePresenter;
 import com.zoe.diary.net.response.DiarySaveResponse;
 import com.zoe.diary.ui.activity.base.BaseMVPActivity;
 import com.zoe.diary.ui.adapter.DiaryImgAdapter;
+import com.zoe.diary.ui.dialog.BottomDialogView;
 import com.zoe.diary.ui.widget.GlideEngine;
+import com.zoe.diary.utils.DateUtil;
 import com.zoe.diary.utils.LogUtil;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -31,9 +35,18 @@ public class DiaryEditActivity extends BaseMVPActivity<SavePresenter, SaveContra
     @BindView(R.id.img_view_pager)
     ViewPager imgViewPager;
 
+    @BindView(R.id.tv_local_date)
+    TextView tvLocalDate;
+
     DiaryImgAdapter diaryImgAdapter;
     private static final int MAX_NUM = 9;
     private List<String> imgList = new ArrayList<>();
+    private static final String KEY_YEAR = "YEAR";
+    private static final String KEY_MONTH = "MONTH";
+    private static final String KEY_DAY = "DAY";
+    private int year;
+    private int month;
+    private int day;
 
     @Override
     protected int getLayoutResource() {
@@ -44,9 +57,30 @@ public class DiaryEditActivity extends BaseMVPActivity<SavePresenter, SaveContra
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initData();
+        initView();
     }
 
-    private void initData() {}
+    private void initData() {
+        Intent intent = getIntent();
+        year = intent.getIntExtra(KEY_YEAR, Calendar.getInstance().get(Calendar.YEAR));
+        month = intent.getIntExtra(KEY_MONTH, Calendar.getInstance().get(Calendar.MONTH));
+        day = intent.getIntExtra(KEY_DAY, Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
+    }
+
+    private void initView() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year,month,day);
+        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+        StringBuilder builder = new StringBuilder();
+        builder.append(DateUtil.convertNumberToWeek(dayOfWeek))
+                .append(month+1)
+                .append("月")
+                .append(day)
+                .append("/")
+                .append(year);
+        tvLocalDate.setText(builder.toString());
+        LogUtil.d("dayOfWeek:"+dayOfWeek);
+    }
 
     @Override
     public void onSaveDiarySuccess(DiarySaveResponse response) {
@@ -112,5 +146,11 @@ public class DiaryEditActivity extends BaseMVPActivity<SavePresenter, SaveContra
         } else {
             diaryImgAdapter.notifyDataSetChanged();
         }
+    }
+
+    @OnClick(R.id.tv_smile)
+    public void smileClick() {
+        BottomDialogView dialogView = new BottomDialogView(this);
+        dialogView.show();
     }
 }
