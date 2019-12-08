@@ -69,11 +69,14 @@ public class BottomDialogView extends Dialog implements AdapterView.OnItemClickL
         setCancelable(true);//是否可以取消，即点击返回键是否可以取消
         setCanceledOnTouchOutside(true);
         Window window = this.getWindow();
+        if(window == null) return;
+        window.setBackgroundDrawableResource(android.R.color.transparent);
         window.setGravity(Gravity.BOTTOM);
         WindowManager.LayoutParams params = window.getAttributes();
         params.width = (int) (DisplayUtil.getScreenWidth((Activity)context) * (0.9));
         params.height = WindowManager.LayoutParams.WRAP_CONTENT;
         window.setAttributes(params);
+        window.setWindowAnimations(R.style.DIALOG_ANIM);
     }
 
     @Override
