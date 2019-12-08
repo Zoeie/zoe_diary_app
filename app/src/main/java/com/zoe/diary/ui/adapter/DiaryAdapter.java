@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
+import com.zoe.diary.ui.fragment.CalendarFragment;
+
 import java.util.List;
 
 
@@ -16,9 +18,9 @@ import java.util.List;
 public class DiaryAdapter extends FragmentStatePagerAdapter {
 
     private static final int MONTH_NUM_IN_ONE_YEAR = 12; //1年12个月
-    private List<Fragment> fragmentList;
+    private List<CalendarFragment> fragmentList;
 
-    public DiaryAdapter(@NonNull FragmentManager fm, List<Fragment> fragmentList) {
+    public DiaryAdapter(@NonNull FragmentManager fm, List<CalendarFragment> fragmentList) {
         super(fm, BEHAVIOR_SET_USER_VISIBLE_HINT);
         this.fragmentList = fragmentList;
     }

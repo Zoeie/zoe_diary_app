@@ -5,6 +5,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.animation.OvershootInterpolator;
@@ -21,6 +22,7 @@ import com.zoe.diary.R;
 import com.zoe.diary.ui.adapter.DayAdapter;
 import com.zoe.diary.ui.fragment.base.BaseFragment;
 import com.zoe.diary.utils.DateUtil;
+import com.zoe.diary.utils.LogUtil;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -52,6 +54,9 @@ public class CalendarFragment extends BaseFragment implements BaseQuickAdapter.O
 
     @BindView(R.id.card_view)
     CardView cardView;
+
+    @BindView(R.id.tv_month_en_in_solid)
+    TextView tvMonthEnInSolid;
 
     private boolean showCalendar = true;
     private boolean isExecuteAnim = false;
@@ -127,6 +132,7 @@ public class CalendarFragment extends BaseFragment implements BaseQuickAdapter.O
         //月份从0开始的
         tvMonthNumber.setText(String.valueOf(month + 1));
         tvMonthEnglish.setText(DateUtil.convertNumberToEnDesc(month));
+        tvMonthEnInSolid.setText(DateUtil.convertNumberToEnDesc(month));
         rlCalendar.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
@@ -137,7 +143,6 @@ public class CalendarFragment extends BaseFragment implements BaseQuickAdapter.O
                 params.height = height;
                 rlSolidBg.setLayoutParams(params);
                 rlCalendar.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                rlSolidBg.setRotationY(180);
             }
         });
     }
@@ -179,9 +184,6 @@ public class CalendarFragment extends BaseFragment implements BaseQuickAdapter.O
             public void onAnimationStart(Animator animation, boolean isReverse) {
                 isExecuteAnim = true;
                 doHalfAlready = false;
-                if(!showCalendar) {
-                    rlSolidBg.setRotationY(180);
-                }
             }
 
             @Override
@@ -191,5 +193,11 @@ public class CalendarFragment extends BaseFragment implements BaseQuickAdapter.O
             }
         });
         rotateAnimator.start();
+    }
+
+    public void setShowCalendar(boolean showCalendar) {
+        this.showCalendar = showCalendar;
+        rlCalendar.setVisibility(showCalendar ? View.VISIBLE : View.INVISIBLE);
+        rlSolidBg.setVisibility(!showCalendar ? View.VISIBLE : View.INVISIBLE);
     }
 }
