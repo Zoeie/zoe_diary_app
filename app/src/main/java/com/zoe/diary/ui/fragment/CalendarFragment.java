@@ -1,20 +1,26 @@
 package com.zoe.diary.ui.fragment;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewTreeObserver;
+import android.view.animation.OvershootInterpolator;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.zoe.diary.R;
 import com.zoe.diary.ui.adapter.DayAdapter;
-import com.zoe.diary.ui.anim.RotateYAnimation;
 import com.zoe.diary.ui.fragment.base.BaseFragment;
 import com.zoe.diary.utils.DateUtil;
-import com.zoe.diary.utils.LogUtil;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -38,11 +44,23 @@ public class CalendarFragment extends BaseFragment implements BaseQuickAdapter.O
     @BindView(R.id.tv_month_english)
     TextView tvMonthEnglish;
 
+    @BindView(R.id.rl_solid_bg)
+    RelativeLayout rlSolidBg;
+
+    @BindView(R.id.rl_calendar)
+    RelativeLayout rlCalendar;
+
+    @BindView(R.id.card_view)
+    CardView cardView;
+
+    private boolean showCalendar = true;
     private static final String KEY_YEAR = "YEAR";
     private static final String KEY_MONTH = "MONTH";
     private int year;
     private int month;
-    private RotateYAnimation animation;
+    private int width;
+    private int height;
+    private boolean doHalfAlready = false;
 
     public static CalendarFragment getInstance(int year, int month) {
         CalendarFragment fragment = new CalendarFragment();
@@ -108,6 +126,19 @@ public class CalendarFragment extends BaseFragment implements BaseQuickAdapter.O
         //月份从0开始的
         tvMonthNumber.setText(String.valueOf(month + 1));
         tvMonthEnglish.setText(DateUtil.convertNumberToEnDesc(month));
+        rlCalendar.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                width = rlCalendar.getWidth();
+                height = rlCalendar.getHeight();
+                CardView.LayoutParams params = (CardView.LayoutParams) rlSolidBg.getLayoutParams();
+                params.width = width;
+                params.height = height;
+                rlSolidBg.setLayoutParams(params);
+                rlCalendar.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                rlSolidBg.setRotationY(180);
+            }
+        });
     }
 
     @Override
@@ -116,30 +147,45 @@ public class CalendarFragment extends BaseFragment implements BaseQuickAdapter.O
         Toast.makeText(getActivity(), tag, Toast.LENGTH_SHORT).show();
     }
 
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        Bundle arguments = getArguments();
-        LogUtil.d("isVisibleToUser:"+isVisibleToUser+",month:"+month+",arguments:"+arguments.getInt(KEY_MONTH));
-    }
-
     public void doAnim() {
-        if(animation == null) {
-            animation = createRotateAnim();
-        }
-        rootView.startAnimation(animation);
+        int start = showCalendar ? 0 : 180;
+        int end = showCalendar ? 180 : 0;
+        ObjectAnimator rotateAnimator = ObjectAnimator.ofFloat(rootView, "rotationY", start, end);
+        rotateAnimator.setInterpolator(new OvershootInterpolator());
+        rootView.setPivotX(width / 2);
+        rootView.setPivotY(height / 2);
+        rotateAnimator.setDuration(1000);
+        rotateAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                float value = (float) animation.getAnimatedValue();
+                if(showCalendar && value > 90 && !doHalfAlready) {
+                    rlCalendar.setVisibility(View.INVISIBLE);
+                    rlSolidBg.setVisibility(View.VISIBLE);
+                    doHalfAlready = true;
+                }
+                if(!showCalendar && value < 90 && !doHalfAlready) {
+                    rlCalendar.setVisibility(View.VISIBLE);
+                    rlSolidBg.setVisibility(View.INVISIBLE);
+                    doHalfAlready = true;
+                }
+            }
+        });
+
+        rotateAnimator.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationStart(Animator animation, boolean isReverse) {
+                doHalfAlready = false;
+                if(!showCalendar) {
+                    rlSolidBg.setRotationY(180);
+                }
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation, boolean isReverse) {
+                showCalendar = !showCalendar;
+            }
+        });
+        rotateAnimator.start();
     }
-
-    private RotateYAnimation createRotateAnim() {
-        RotateYAnimation animation = new RotateYAnimation();
-        //旋转的次数
-        animation.setRepeatCount(0);
-        //旋转的时间
-        animation.setDuration(3000);
-        //是否停留在动画的最后一帧
-        animation.setFillAfter(true);
-        return animation;
-    }
-
-
 }

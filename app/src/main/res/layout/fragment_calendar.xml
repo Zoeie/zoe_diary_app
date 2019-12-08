@@ -7,6 +7,7 @@
     android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/card_view"
         android:layout_centerInParent="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -14,6 +15,7 @@
         app:cardElevation="5dp">
 
         <RelativeLayout
+            android:id="@+id/rl_calendar"
             android:paddingBottom="60dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
@@ -52,6 +54,22 @@
                 app:spanCount="7"
                 tools:itemCount="31"
                 tools:listitem="@layout/diary_calendar" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:visibility="gone"
+            android:id="@+id/rl_solid_bg"
+            android:background="@color/colorAccent"
+            android:paddingBottom="60dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_centerInParent="true"
+                android:textSize="20sp"
+                android:text="DEC"
+                android:textColor="@color/color_black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 </RelativeLayout>

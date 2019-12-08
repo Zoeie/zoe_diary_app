@@ -80,7 +80,7 @@ public class DiaryFragment extends BaseFragment {
     }
 
     @OnClick(R.id.tv_rotate)
-    public void onRotate() {
+    public synchronized void onRotate() {
         int currentItem = viewPager.getCurrentItem();
         if (currentItem == fragmentList.size() - 1) {
             executeRotate(currentItem - 1);
