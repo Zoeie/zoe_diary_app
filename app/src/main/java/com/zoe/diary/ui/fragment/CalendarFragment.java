@@ -54,6 +54,7 @@ public class CalendarFragment extends BaseFragment implements BaseQuickAdapter.O
     CardView cardView;
 
     private boolean showCalendar = true;
+    private boolean isExecuteAnim = false;
     private static final String KEY_YEAR = "YEAR";
     private static final String KEY_MONTH = "MONTH";
     private int year;
@@ -148,6 +149,7 @@ public class CalendarFragment extends BaseFragment implements BaseQuickAdapter.O
     }
 
     public void doAnim() {
+        if(isExecuteAnim) return;
         int start = showCalendar ? 0 : 180;
         int end = showCalendar ? 180 : 0;
         ObjectAnimator rotateAnimator = ObjectAnimator.ofFloat(rootView, "rotationY", start, end);
@@ -175,6 +177,7 @@ public class CalendarFragment extends BaseFragment implements BaseQuickAdapter.O
         rotateAnimator.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationStart(Animator animation, boolean isReverse) {
+                isExecuteAnim = true;
                 doHalfAlready = false;
                 if(!showCalendar) {
                     rlSolidBg.setRotationY(180);
@@ -184,6 +187,7 @@ public class CalendarFragment extends BaseFragment implements BaseQuickAdapter.O
             @Override
             public void onAnimationEnd(Animator animation, boolean isReverse) {
                 showCalendar = !showCalendar;
+                isExecuteAnim = false;
             }
         });
         rotateAnimator.start();
