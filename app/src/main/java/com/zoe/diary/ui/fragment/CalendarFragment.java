@@ -72,8 +72,9 @@ public class CalendarFragment extends BaseFragment implements BaseQuickAdapter.O
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.YEAR, year);
         calendar.set(Calendar.MONTH, month);
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
         int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
-        int offsetDay = (dayOfWeek + 1) % Calendar.DAY_OF_WEEK;
+        int offsetDay = (dayOfWeek - 1) % Calendar.DAY_OF_WEEK;
         int daysInMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
         DayAdapter dayAdapter = new DayAdapter(getDayData(offsetDay, daysInMonth), getActivity());
         dayAdapter.setOnItemChildClickListener(this);
