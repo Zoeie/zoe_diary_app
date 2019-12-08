@@ -1,6 +1,7 @@
 package com.zoe.diary.ui.dialog;
 
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 import com.zoe.diary.R;
 import com.zoe.diary.constant.Constants;
 import com.zoe.diary.ui.adapter.DiaryIconAdapter;
+import com.zoe.diary.utils.DisplayUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -69,7 +71,7 @@ public class BottomDialogView extends Dialog implements AdapterView.OnItemClickL
         Window window = this.getWindow();
         window.setGravity(Gravity.BOTTOM);
         WindowManager.LayoutParams params = window.getAttributes();
-        params.width = WindowManager.LayoutParams.MATCH_PARENT;
+        params.width = (int) (DisplayUtil.getScreenWidth((Activity)context) * (0.9));
         params.height = WindowManager.LayoutParams.WRAP_CONTENT;
         window.setAttributes(params);
     }
