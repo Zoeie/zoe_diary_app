@@ -41,9 +41,6 @@ public class DiaryActivity extends BaseMVPActivity<DiaryPresenter, DiaryContract
                         lastFragment = 0;
                     }
                     return true;
-                case R.id.navigation_buy:
-                    startActivity(new Intent(DiaryActivity.this, DiaryEditActivity.class));
-                    return true;
                 case R.id.navigation_user:
                     LogUtil.d("navigation_user lastFragment:" + lastFragment);
                     if (lastFragment != 1) {
@@ -110,5 +107,10 @@ public class DiaryActivity extends BaseMVPActivity<DiaryPresenter, DiaryContract
         LogUtil.d("lastFragment:" + lastFragment + ",index:" + index);
         //根据角标将fragment显示出来
         transaction.show(fragmentList[index]).commitAllowingStateLoss();
+    }
+
+    @OnClick(R.id.fbtn_add_diary)
+    public void onAddDiary() {
+        startActivity(new Intent(DiaryActivity.this, DiaryEditActivity.class));
     }
 }
