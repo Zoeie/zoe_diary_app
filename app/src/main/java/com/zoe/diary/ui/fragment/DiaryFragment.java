@@ -18,6 +18,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * author zoe
@@ -76,5 +77,29 @@ public class DiaryFragment extends BaseFragment {
         DiaryAdapter diaryAdapter = new DiaryAdapter(getChildFragmentManager(), fragmentList);
         viewPager.setAdapter(diaryAdapter);
         viewPager.setCurrentItem(Calendar.getInstance().get(Calendar.MONTH));
+    }
+
+    @OnClick(R.id.tv_rotate)
+    public void onRotate() {
+        int currentItem = viewPager.getCurrentItem();
+        if (currentItem == fragmentList.size() - 1) {
+            executeRotate(currentItem - 1);
+            executeRotate(currentItem);
+        } else if (currentItem == 0) {
+            executeRotate(currentItem);
+            executeRotate(currentItem + 1);
+        } else {
+            executeRotate(currentItem - 1);
+            executeRotate(currentItem);
+            executeRotate(currentItem + 1);
+        }
+    }
+
+    private void executeRotate(int pos) {
+        Fragment fragment = fragmentList.get(pos);
+        if (fragment instanceof CalendarFragment) {
+            CalendarFragment target = (CalendarFragment) fragment;
+            target.doAnim();
+        }
     }
 }

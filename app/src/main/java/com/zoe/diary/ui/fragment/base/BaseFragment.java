@@ -23,7 +23,7 @@ import butterknife.ButterKnife;
 
 public abstract class BaseFragment extends Fragment implements Observer {
 
-    private View rootView;
+    protected View rootView;
 
     @Nullable
     @Override

@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.zoe.diary.R;
 import com.zoe.diary.ui.adapter.DayAdapter;
+import com.zoe.diary.ui.anim.RotateYAnimation;
 import com.zoe.diary.ui.fragment.base.BaseFragment;
 import com.zoe.diary.utils.DateUtil;
 import com.zoe.diary.utils.LogUtil;
@@ -41,6 +42,7 @@ public class CalendarFragment extends BaseFragment implements BaseQuickAdapter.O
     private static final String KEY_MONTH = "MONTH";
     private int year;
     private int month;
+    private RotateYAnimation animation;
 
     public static CalendarFragment getInstance(int year, int month) {
         CalendarFragment fragment = new CalendarFragment();
@@ -113,4 +115,31 @@ public class CalendarFragment extends BaseFragment implements BaseQuickAdapter.O
         String tag = (String) view.getTag();
         Toast.makeText(getActivity(), tag, Toast.LENGTH_SHORT).show();
     }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        Bundle arguments = getArguments();
+        LogUtil.d("isVisibleToUser:"+isVisibleToUser+",month:"+month+",arguments:"+arguments.getInt(KEY_MONTH));
+    }
+
+    public void doAnim() {
+        if(animation == null) {
+            animation = createRotateAnim();
+        }
+        rootView.startAnimation(animation);
+    }
+
+    private RotateYAnimation createRotateAnim() {
+        RotateYAnimation animation = new RotateYAnimation();
+        //旋转的次数
+        animation.setRepeatCount(0);
+        //旋转的时间
+        animation.setDuration(3000);
+        //是否停留在动画的最后一帧
+        animation.setFillAfter(true);
+        return animation;
+    }
+
+
 }
