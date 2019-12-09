@@ -10,7 +10,7 @@
 
     <style name="DiaryTheme" parent="AppTheme">
         <item name="windowNoTitle">true</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowBackground">@drawable/layer_launcher</item>
     </style>
 
     <style name="MyDialog" parent="@android:style/Theme.NoTitleBar.Fullscreen">

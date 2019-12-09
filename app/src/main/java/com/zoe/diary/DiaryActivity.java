@@ -61,6 +61,7 @@ public class DiaryActivity extends BaseMVPActivity<DiaryPresenter, DiaryContract
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         initView();
         initData();
     }
