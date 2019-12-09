@@ -67,6 +67,8 @@ public class CalendarFragment extends BaseFragment implements BaseQuickAdapter.O
     private int width;
     private int height;
     private boolean doHalfAlready = false;
+    private List<Integer> dayList = new ArrayList<>();
+    private DayAdapter dayAdapter;
 
     public static CalendarFragment getInstance(int year, int month) {
         CalendarFragment fragment = new CalendarFragment();
@@ -95,6 +97,14 @@ public class CalendarFragment extends BaseFragment implements BaseQuickAdapter.O
             year = arguments.getInt(KEY_YEAR);
             month = arguments.getInt(KEY_MONTH);
         }
+        computerDayList();
+        dayAdapter = new DayAdapter(dayList, getActivity());
+        dayAdapter.setOnItemChildClickListener(this);
+        rvDate.setAdapter(dayAdapter);
+    }
+
+    private void computerDayList() {
+        dayList.clear();
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.YEAR, year);
         calendar.set(Calendar.MONTH, month);
@@ -102,9 +112,7 @@ public class CalendarFragment extends BaseFragment implements BaseQuickAdapter.O
         int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
         int offsetDay = (dayOfWeek - 1) % Calendar.DAY_OF_WEEK;
         int daysInMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
-        DayAdapter dayAdapter = new DayAdapter(getDayData(offsetDay, daysInMonth), getActivity());
-        dayAdapter.setOnItemChildClickListener(this);
-        rvDate.setAdapter(dayAdapter);
+        dayList.addAll(getDayData(offsetDay, daysInMonth));
     }
 
     private List<Integer> getDayData(int offsetDay, int daysInMonth) {
@@ -129,10 +137,7 @@ public class CalendarFragment extends BaseFragment implements BaseQuickAdapter.O
     }
 
     private void initView() {
-        //月份从0开始的
-        tvMonthNumber.setText(String.valueOf(month + 1));
-        tvMonthEnglish.setText(DateUtil.convertNumberToEnDesc(month));
-        tvMonthEnInSolid.setText(DateUtil.convertNumberToEnDesc(month));
+        setMonthUI();
         rlCalendar.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
@@ -146,6 +151,25 @@ public class CalendarFragment extends BaseFragment implements BaseQuickAdapter.O
                 rlSolidBg.setRotationY(180); //默认先旋转180度
             }
         });
+    }
+
+    private void setMonthUI() {
+        //月份从0开始的
+        tvMonthNumber.setText(String.valueOf(month + 1));
+        tvMonthEnglish.setText(DateUtil.convertNumberToEnDesc(month));
+        tvMonthEnInSolid.setText(DateUtil.convertNumberToEnDesc(month));
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+
+    public void notifyUpdateUI() {
+        setMonthUI();
+        computerDayList();
+        if (dayAdapter != null) {
+            dayAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override

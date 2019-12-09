@@ -4,11 +4,11 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.zoe.diary.R;
 import com.zoe.diary.ui.adapter.DiaryAdapter;
+import com.zoe.diary.ui.dialog.DiaryDateBottomDialog;
 import com.zoe.diary.ui.fragment.base.BaseFragment;
 import com.zoe.diary.ui.transform.DiaryPageTranform;
 import com.zoe.diary.utils.LogUtil;
@@ -30,11 +30,16 @@ public class DiaryFragment extends BaseFragment {
     @BindView(R.id.view_pager)
     ViewPager viewPager;
 
+    @BindView(R.id.tv_date)
+    TextView tvDate;
+
     private boolean showCalendar = true;
     private static final String KEY_TAG = "KEY_TAG";
     private String tag = "";
     private List<CalendarFragment> fragmentList;
     private int targetYear = Calendar.getInstance().get(Calendar.YEAR);
+    private int targetMonth = Calendar.getInstance().get(Calendar.MONTH);
+    private DiaryAdapter diaryAdapter;
 
     public static DiaryFragment getInstance(String tag) {
         LogUtil.d("tag:" + tag);
@@ -62,10 +67,10 @@ public class DiaryFragment extends BaseFragment {
         if (arguments != null) {
             tag = arguments.getString(KEY_TAG);
         }
-        initCalendarFragment();
+        genCalendarFragment();
     }
 
-    private void initCalendarFragment() {
+    private void genCalendarFragment() {
         fragmentList = new ArrayList<>();
         for (int month = 0; month < 12; month++) {
             fragmentList.add(CalendarFragment.getInstance(targetYear, month));
@@ -75,9 +80,22 @@ public class DiaryFragment extends BaseFragment {
     private void initView() {
         viewPager.setOffscreenPageLimit(fragmentList.size());
         viewPager.setPageTransformer(false, new DiaryPageTranform());
-        DiaryAdapter diaryAdapter = new DiaryAdapter(getChildFragmentManager(), fragmentList);
+        diaryAdapter = new DiaryAdapter(getChildFragmentManager(), fragmentList);
         viewPager.setAdapter(diaryAdapter);
-        viewPager.setCurrentItem(Calendar.getInstance().get(Calendar.MONTH));
+        update();
+        viewPager.setCurrentItem(targetMonth);
+    }
+
+    private void update() {
+        tvDate.setText(String.valueOf(targetYear));
+    }
+
+    private void notifyDate() {
+        for (int i = 0; i < fragmentList.size();i++) {
+            CalendarFragment fragment = fragmentList.get(i);
+            fragment.setYear(targetYear);
+            fragment.notifyUpdateUI();
+        }
     }
 
     @OnClick(R.id.tv_rotate)
@@ -86,5 +104,25 @@ public class DiaryFragment extends BaseFragment {
             fragment.doAnim();
         }
         showCalendar = !showCalendar;
+    }
+
+    @OnClick(R.id.tv_date)
+    public void onTvDate() {
+        DiaryDateBottomDialog diaryDateBottomDialog = new DiaryDateBottomDialog(getActivity());
+        diaryDateBottomDialog.setOnDateListener(new DiaryDateBottomDialog.OnDateListener() {
+            @Override
+            public void onDate(int year, int month) {
+                boolean yearChanged = (targetYear != year);
+                //更新年份显示
+                targetYear = year;
+                targetMonth = month;
+                if (yearChanged) {
+                    update();
+                    notifyDate();
+                }
+                viewPager.setCurrentItem(targetMonth);
+            }
+        });
+        diaryDateBottomDialog.show();
     }
 }

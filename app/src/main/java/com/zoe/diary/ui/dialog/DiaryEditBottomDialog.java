@@ -11,7 +11,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.Toast;
 
 import com.zoe.diary.R;
 import com.zoe.diary.constant.Constants;
@@ -21,7 +20,7 @@ import com.zoe.diary.utils.DisplayUtil;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class BottomDialogView extends Dialog implements AdapterView.OnItemClickListener {
+public class DiaryEditBottomDialog extends Dialog implements AdapterView.OnItemClickListener {
 
     @BindView(R.id.grid_mood)
     GridView gridMood;
@@ -43,7 +42,7 @@ public class BottomDialogView extends Dialog implements AdapterView.OnItemClickL
 
     private Context context;
 
-    public BottomDialogView(Context context) {
+    public DiaryEditBottomDialog(Context context) {
         super(context, R.style.MyDialog);
         this.context = context;
     }
@@ -69,11 +68,11 @@ public class BottomDialogView extends Dialog implements AdapterView.OnItemClickL
         setCancelable(true);//是否可以取消，即点击返回键是否可以取消
         setCanceledOnTouchOutside(true);
         Window window = this.getWindow();
-        if(window == null) return;
+        if (window == null) return;
         window.setBackgroundDrawableResource(android.R.color.transparent);
         window.setGravity(Gravity.BOTTOM);
         WindowManager.LayoutParams params = window.getAttributes();
-        params.width = (int) (DisplayUtil.getScreenWidth((Activity)context) * (0.9));
+        params.width = (int) (DisplayUtil.getScreenWidth((Activity) context) * (0.9));
         params.height = WindowManager.LayoutParams.WRAP_CONTENT;
         window.setAttributes(params);
         window.setWindowAnimations(R.style.DIALOG_ANIM);

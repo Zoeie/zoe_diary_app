@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@color/color_E6FFFFFF"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/color_E6FFFFFF">
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/view_pager"
@@ -11,21 +12,34 @@
         android:layout_centerInParent="true"
         android:clipChildren="false"
         android:clipToPadding="false"
-        android:paddingEnd="70dp"
-        android:paddingStart="70dp" />
+        android:paddingStart="70dp"
+        android:paddingEnd="70dp" />
 
     <TextView
         android:id="@+id/tv_rotate"
-        android:paddingTop="3dp"
-        android:paddingBottom="3dp"
-        android:paddingStart="30dp"
-        android:paddingEnd="30dp"
-        android:background="@color/color_black"
-        android:textColor="@android:color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="40dp"
+        android:layout_marginBottom="60dp"
+        android:background="@drawable/tv_back_bg"
+        android:paddingStart="50dp"
+        android:paddingTop="3dp"
+        android:paddingEnd="50dp"
+        android:paddingBottom="3dp"
         android:text="返回"
+        android:textColor="@android:color/white" />
+
+    <TextView
+        android:id="@+id/tv_date"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"
+        android:drawablePadding="5dp"
+        android:drawableEnd="@mipmap/small_down"
+        android:padding="10dp"
+        android:paddingTop="3dp"
+        android:textColor="@color/color_black"
+        tools:text="2019" />
 </RelativeLayout>

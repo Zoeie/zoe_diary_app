@@ -19,7 +19,7 @@ import com.zoe.diary.net.request.save.SavePresenter;
 import com.zoe.diary.net.response.DiarySaveResponse;
 import com.zoe.diary.ui.activity.base.BaseMVPActivity;
 import com.zoe.diary.ui.adapter.DiaryImgAdapter;
-import com.zoe.diary.ui.dialog.BottomDialogView;
+import com.zoe.diary.ui.dialog.DiaryEditBottomDialog;
 import com.zoe.diary.ui.widget.GlideEngine;
 import com.zoe.diary.utils.DateUtil;
 import com.zoe.diary.utils.LogUtil;
@@ -159,8 +159,8 @@ public class DiaryEditActivity extends BaseMVPActivity<SavePresenter, SaveContra
 
     @OnClick({R.id.tv_smile, R.id.tv_weather, R.id.tv_heart, R.id.tv_tag, R.id.tv_location})
     public void smileClick() {
-        BottomDialogView dialogView = new BottomDialogView(this);
-        dialogView.setOnDialogItemClickListener(new BottomDialogView.OnDialogItemClickListener() {
+        DiaryEditBottomDialog dialogView = new DiaryEditBottomDialog(this);
+        dialogView.setOnDialogItemClickListener(new DiaryEditBottomDialog.OnDialogItemClickListener() {
             @Override
             public void onItemClick(int type, int pos) {
                 if (type == Constants.TYPE.MOOD) {
