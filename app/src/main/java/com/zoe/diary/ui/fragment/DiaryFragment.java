@@ -82,6 +82,22 @@ public class DiaryFragment extends BaseFragment {
         viewPager.setPageTransformer(false, new DiaryPageTranform());
         diaryAdapter = new DiaryAdapter(getChildFragmentManager(), fragmentList);
         viewPager.setAdapter(diaryAdapter);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                targetMonth = position;
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
         update();
         viewPager.setCurrentItem(targetMonth);
     }
@@ -108,7 +124,7 @@ public class DiaryFragment extends BaseFragment {
 
     @OnClick(R.id.tv_date)
     public void onTvDate() {
-        DiaryDateBottomDialog diaryDateBottomDialog = new DiaryDateBottomDialog(getActivity());
+        DiaryDateBottomDialog diaryDateBottomDialog = new DiaryDateBottomDialog(getActivity(), targetYear, targetMonth);
         diaryDateBottomDialog.setOnDateListener(new DiaryDateBottomDialog.OnDateListener() {
             @Override
             public void onDate(int year, int month) {

@@ -8,7 +8,6 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Toast;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -33,12 +32,17 @@ public class DiaryDateBottomDialog extends Dialog implements YearAdapter.OnDateL
     RecyclerView rvDateYear;
 
     private Context context;
-    private YearAdapter yearAdapter;
     private OnDateListener onDateListener;
+    private int targetYear;
+    private int targetMonth;
+    private static final int START_YEAR = 2010;
+    private static final int END_YEAR = 2023;
 
-    public DiaryDateBottomDialog(Context context) {
+    public DiaryDateBottomDialog(Context context, int targetYear,int targetMonth) {
         super(context, R.style.MyDialog);
         this.context = context;
+        this.targetYear = targetYear;
+        this.targetMonth = targetMonth;
     }
 
     @Override
@@ -52,7 +56,7 @@ public class DiaryDateBottomDialog extends Dialog implements YearAdapter.OnDateL
     }
 
     private void initView() {
-        yearAdapter = new YearAdapter(genYearList(), context);
+        YearAdapter yearAdapter = new YearAdapter(genYearList(), context, targetYear, targetMonth);
         yearAdapter.setOnDateListener(this);
         rvDateYear.setAdapter(yearAdapter);
     }
@@ -60,7 +64,7 @@ public class DiaryDateBottomDialog extends Dialog implements YearAdapter.OnDateL
     //从2010 - 2023年
     private List<Integer> genYearList() {
         List<Integer> list = new ArrayList<>();
-        for (int i = 2010; i <= 2023; i++) {
+        for (int i = START_YEAR; i <= END_YEAR; i++) {
             list.add(i);
         }
         return list;
@@ -75,15 +79,15 @@ public class DiaryDateBottomDialog extends Dialog implements YearAdapter.OnDateL
         window.setGravity(Gravity.BOTTOM);
         WindowManager.LayoutParams params = window.getAttributes();
         params.width = (int) (DisplayUtil.getScreenWidth((Activity) context) * (0.9));
-        params.height = (int) (DisplayUtil.getScreenHeight((Activity) context) * (0.7));
+        params.height = WindowManager.LayoutParams.WRAP_CONTENT;
         window.setAttributes(params);
         window.setWindowAnimations(R.style.DIALOG_ANIM);
     }
 
     @Override
     public void onDate(int year, int month) {
-        if(onDateListener != null) {
-            onDateListener.onDate(year,month);
+        if (onDateListener != null) {
+            onDateListener.onDate(year, month);
             dismiss();
         }
     }
@@ -94,5 +98,11 @@ public class DiaryDateBottomDialog extends Dialog implements YearAdapter.OnDateL
 
     public interface OnDateListener {
         void onDate(int year, int month);
+    }
+
+    @Override
+    public void show() {
+        super.show();
+        rvDateYear.scrollToPosition(targetYear - START_YEAR);
     }
 }

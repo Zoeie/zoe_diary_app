@@ -22,19 +22,23 @@ import java.util.List;
 public class YearAdapter extends BaseQuickAdapter<Integer, BaseViewHolder> {
 
     private Context context;
+    private int month;
+    private int year;
     private int[] monthArr = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
     public OnDateListener onDateListener;
 
-    public YearAdapter(@Nullable List<Integer> data, Context context) {
+    public YearAdapter(@Nullable List<Integer> data, Context context, int targetYear, int targetMonth) {
         super(R.layout.diary_year, data);
         this.context = context;
+        this.year = targetYear;
+        this.month = targetMonth;
     }
 
     @Override
     protected void convert(@NonNull BaseViewHolder helper, Integer value) {
         helper.setText(R.id.tv_year, String.valueOf(value));
         GridView gridView = helper.getView(R.id.gv_month);
-        gridView.setAdapter(new DiaryYearAdapter(context, monthArr));
+        gridView.setAdapter(new DiaryYearAdapter(context, monthArr, month, value == year));
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
