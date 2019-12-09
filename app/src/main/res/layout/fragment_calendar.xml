@@ -8,17 +8,17 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card_view"
-        android:layout_centerInParent="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
         app:cardCornerRadius="5dp"
         app:cardElevation="5dp">
 
         <RelativeLayout
             android:id="@+id/rl_calendar"
-            android:paddingBottom="60dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingBottom="60dp">
 
             <TextView
                 android:id="@+id/tv_month_number"
@@ -59,18 +59,74 @@
         <RelativeLayout
             android:visibility="gone"
             android:id="@+id/rl_solid_bg"
-            android:background="@color/colorAccent"
-            android:paddingBottom="60dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorAccent">
+
+            <TextView
+                android:id="@+id/tv_month_num_in_solid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="30dp"
+                android:textStyle="bold"
+                android:textColor="@color/color_black"
+                android:textSize="50sp"
+                tools:text="11" />
+
             <TextView
                 android:id="@+id/tv_month_en_in_solid"
-                android:layout_centerInParent="true"
-                android:textSize="20sp"
-                tools:text="DEC"
-                android:textColor="@color/color_black"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_month_num_in_solid"
+                android:layout_marginStart="28dp"
+                android:textColor="@color/color_black"
+                android:textSize="20sp"
+                tools:text="DEC" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ProgressBar
+                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                    android:layout_width="100dp"
+                    android:layout_height="5dp"
+                    android:progressDrawable="@drawable/progress"
+                    android:max="30"
+                    android:progress="1" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_weight="1"
+                    android:text="1/30"
+                    android:textColor="@android:color/white" />
+
+                <View
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginStart="5dp"
+                    android:background="@drawable/circle_shape" />
+
+                <View
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginStart="5dp"
+                    android:background="@drawable/circle_shape" />
+
+                <View
+                    android:layout_width="5dp"
+                    android:layout_height="5dp"
+                    android:layout_marginStart="5dp"
+                    android:background="@drawable/circle_shape" />
+            </LinearLayout>
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 </RelativeLayout>

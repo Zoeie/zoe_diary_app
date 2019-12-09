@@ -27,6 +27,7 @@ import com.zoe.diary.utils.LogUtil;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.stream.Stream;
 
 import butterknife.BindView;
 
@@ -57,6 +58,9 @@ public class CalendarFragment extends BaseFragment implements BaseQuickAdapter.O
 
     @BindView(R.id.tv_month_en_in_solid)
     TextView tvMonthEnInSolid;
+
+    @BindView(R.id.tv_month_num_in_solid)
+    TextView tvMonthNumInSolid;
 
     private boolean showCalendar = true;
     private boolean isExecuteAnim = false;
@@ -158,6 +162,7 @@ public class CalendarFragment extends BaseFragment implements BaseQuickAdapter.O
         tvMonthNumber.setText(String.valueOf(month + 1));
         tvMonthEnglish.setText(DateUtil.convertNumberToEnDesc(month));
         tvMonthEnInSolid.setText(DateUtil.convertNumberToEnDesc(month));
+        tvMonthNumInSolid.setText(String.valueOf(month + 1));
     }
 
     public void setYear(int year) {
