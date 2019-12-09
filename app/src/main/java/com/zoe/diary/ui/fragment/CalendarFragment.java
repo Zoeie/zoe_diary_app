@@ -143,6 +143,7 @@ public class CalendarFragment extends BaseFragment implements BaseQuickAdapter.O
                 params.height = height;
                 rlSolidBg.setLayoutParams(params);
                 rlCalendar.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                rlSolidBg.setRotationY(180); //默认先旋转180度
             }
         });
     }
@@ -154,7 +155,7 @@ public class CalendarFragment extends BaseFragment implements BaseQuickAdapter.O
     }
 
     public void doAnim() {
-        if(isExecuteAnim) return;
+        if (isExecuteAnim) return;
         int start = showCalendar ? 0 : 180;
         int end = showCalendar ? 180 : 0;
         ObjectAnimator rotateAnimator = ObjectAnimator.ofFloat(rootView, "rotationY", start, end);
@@ -166,12 +167,12 @@ public class CalendarFragment extends BaseFragment implements BaseQuickAdapter.O
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 float value = (float) animation.getAnimatedValue();
-                if(showCalendar && value > 90 && !doHalfAlready) {
+                if (showCalendar && value > 90 && !doHalfAlready) {
                     rlCalendar.setVisibility(View.INVISIBLE);
                     rlSolidBg.setVisibility(View.VISIBLE);
                     doHalfAlready = true;
                 }
-                if(!showCalendar && value < 90 && !doHalfAlready) {
+                if (!showCalendar && value < 90 && !doHalfAlready) {
                     rlCalendar.setVisibility(View.VISIBLE);
                     rlSolidBg.setVisibility(View.INVISIBLE);
                     doHalfAlready = true;
@@ -193,11 +194,5 @@ public class CalendarFragment extends BaseFragment implements BaseQuickAdapter.O
             }
         });
         rotateAnimator.start();
-    }
-
-    public void setShowCalendar(boolean showCalendar) {
-        this.showCalendar = showCalendar;
-        rlCalendar.setVisibility(showCalendar ? View.VISIBLE : View.INVISIBLE);
-        rlSolidBg.setVisibility(!showCalendar ? View.VISIBLE : View.INVISIBLE);
     }
 }

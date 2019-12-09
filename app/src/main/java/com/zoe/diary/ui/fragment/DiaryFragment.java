@@ -25,7 +25,7 @@ import butterknife.OnClick;
  * created 2019/12/5 17:30
  */
 
-public class DiaryFragment extends BaseFragment implements ViewPager.OnPageChangeListener {
+public class DiaryFragment extends BaseFragment {
 
     @BindView(R.id.view_pager)
     ViewPager viewPager;
@@ -73,68 +73,18 @@ public class DiaryFragment extends BaseFragment implements ViewPager.OnPageChang
     }
 
     private void initView() {
-        viewPager.setOffscreenPageLimit(3);
+        viewPager.setOffscreenPageLimit(fragmentList.size());
         viewPager.setPageTransformer(false, new DiaryPageTranform());
         DiaryAdapter diaryAdapter = new DiaryAdapter(getChildFragmentManager(), fragmentList);
         viewPager.setAdapter(diaryAdapter);
         viewPager.setCurrentItem(Calendar.getInstance().get(Calendar.MONTH));
-        viewPager.addOnPageChangeListener(this);
     }
 
     @OnClick(R.id.tv_rotate)
     public synchronized void onRotate() {
-        int currentItem = viewPager.getCurrentItem();
-        if (currentItem == fragmentList.size() - 1) {
-            executeRotate(currentItem - 1);
-            executeRotate(currentItem);
-        } else if (currentItem == 0) {
-            executeRotate(currentItem);
-            executeRotate(currentItem + 1);
-        } else {
-            executeRotate(currentItem - 1);
-            executeRotate(currentItem);
-            executeRotate(currentItem + 1);
+        for (CalendarFragment fragment : fragmentList) {
+            fragment.doAnim();
         }
         showCalendar = !showCalendar;
-    }
-
-    private void executeRotate(int pos) {
-        CalendarFragment target = fragmentList.get(pos);
-        target.doAnim();
-    }
-
-    private void notifyDiaryViewType() {
-        int currentItem = viewPager.getCurrentItem();
-        if (currentItem == fragmentList.size() - 1) {
-            executeUpdateViewType(currentItem - 1);
-            executeUpdateViewType(currentItem);
-        } else if (currentItem == 0) {
-            executeUpdateViewType(currentItem);
-            executeUpdateViewType(currentItem + 1);
-        } else {
-            executeUpdateViewType(currentItem - 1);
-            executeUpdateViewType(currentItem);
-            executeUpdateViewType(currentItem + 1);
-        }
-    }
-
-    protected void executeUpdateViewType(int pos) {
-        CalendarFragment target = fragmentList.get(pos);
-        target.setShowCalendar(showCalendar);
-    }
-
-    @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-    }
-
-    @Override
-    public void onPageSelected(int position) {
-        notifyDiaryViewType();
-    }
-
-    @Override
-    public void onPageScrollStateChanged(int state) {
-
     }
 }
