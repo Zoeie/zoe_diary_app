@@ -24,6 +24,7 @@ import com.zoe.diary.database.domain.DiaryInfo;
 import com.zoe.diary.ui.activity.DiaryEditActivity;
 import com.zoe.diary.ui.activity.DiaryMonthActivity;
 import com.zoe.diary.ui.adapter.DayAdapter;
+import com.zoe.diary.ui.dialog.DiaryColorBottomDialog;
 import com.zoe.diary.ui.fragment.base.BaseFragment;
 import com.zoe.diary.utils.DateUtil;
 import com.zoe.diary.utils.LogUtil;
@@ -264,5 +265,12 @@ public class CalendarFragment extends BaseFragment implements BaseQuickAdapter.O
         intent.putExtra(DiaryMonthActivity.KEY_YEAR, year);
         intent.putExtra(DiaryMonthActivity.KEY_MONTH, month);
         startActivity(intent);
+    }
+
+    @OnClick(R.id.ll_show_color_dialog)
+    public void showColorDialog() {
+        LogUtil.d("showColorDialog");
+        DiaryColorBottomDialog diaryColorBottomDialog = new DiaryColorBottomDialog(getActivity());
+        diaryColorBottomDialog.show();
     }
 }
