@@ -15,6 +15,8 @@ import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.zoe.diary.R;
 import com.zoe.diary.constant.Constants;
+import com.zoe.diary.database.DbManager;
+import com.zoe.diary.database.domain.DiaryInfo;
 import com.zoe.diary.net.request.save.SaveContract;
 import com.zoe.diary.net.request.save.SavePresenter;
 import com.zoe.diary.net.response.DiarySaveResponse;
@@ -142,13 +144,40 @@ public class DiaryEditActivity extends BaseMVPActivity<SavePresenter, SaveContra
     public void saveDiary() {
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, month, day);
-        Date date = new Date(calendar.getTimeInMillis());
         String title = etInputTitle.getText().toString();
+        long createTime = calendar.getTimeInMillis();
+        int mood =this.mood;
+        int weather = this.weather;
+        List<String> tag = new ArrayList<>();
+        tag.add("自定义标签1");
+        List<String> img = this.imgList;
         String content = etInputContent.getText().toString();
         String location = "海岸城";
-        List<String> tagList = new ArrayList<>();
-        tagList.add("自定义标签1");
-        mPresenter.saveDiary(imgList, title, content, weather, mood, location, date, tagList);
+        int year = this.year;
+        int month = this.month;
+        int day = this.day;
+        int hour = calendar.get(Calendar.HOUR);
+        int minute = calendar.get(Calendar.MINUTE);
+        int second = calendar.get(Calendar.SECOND);
+        //保存
+        DiaryInfo diaryInfo = new DiaryInfo();
+        diaryInfo.setTitle(title);
+        diaryInfo.setCreateTime(createTime);
+        diaryInfo.setMood(mood);
+        diaryInfo.setWeather(weather);
+        diaryInfo.setTag(tag);
+        diaryInfo.setImg(img);
+        diaryInfo.setContent(content);
+        diaryInfo.setLocation(location);
+        diaryInfo.setYear(year);
+        diaryInfo.setMonth(month);
+        diaryInfo.setDay(day);
+        diaryInfo.setHour(hour);
+        diaryInfo.setMinute(minute);
+        diaryInfo.setSecond(second);
+        DbManager.getInstance().insertDiaryInfo(diaryInfo);
+        LogUtil.d(diaryInfo.toString());
+        finish();
     }
 
     @OnClick(R.id.rl_add_img)

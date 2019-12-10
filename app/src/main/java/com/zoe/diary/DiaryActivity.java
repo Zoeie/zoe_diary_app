@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.zoe.diary.database.DbManager;
+import com.zoe.diary.database.domain.DiaryInfo;
 import com.zoe.diary.net.request.diary.DiaryContract;
 import com.zoe.diary.net.request.diary.DiaryPresenter;
 import com.zoe.diary.net.response.DiaryListResponse;
@@ -17,6 +19,8 @@ import com.zoe.diary.ui.activity.base.BaseMVPActivity;
 import com.zoe.diary.ui.fragment.DiaryFragment;
 import com.zoe.diary.ui.fragment.MyFragment;
 import com.zoe.diary.utils.LogUtil;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -113,5 +117,14 @@ public class DiaryActivity extends BaseMVPActivity<DiaryPresenter, DiaryContract
     @OnClick(R.id.fbtn_add_diary)
     public void onAddDiary() {
         startActivity(new Intent(DiaryActivity.this, DiaryEditActivity.class));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        List<DiaryInfo> diaryContent = DbManager.getInstance().getDiaryContent();
+        for (DiaryInfo info : diaryContent) {
+            LogUtil.d(info.toString());
+        }
     }
 }
