@@ -58,4 +58,24 @@ public class DateUtil {
         }
         return "";
     }
+
+    public static String convertEnToWeek(int dayOfWeek) {
+        switch (dayOfWeek) {
+            case Calendar.SUNDAY:
+                return "SUN";
+            case Calendar.MONDAY:
+                return "MON";
+            case Calendar.TUESDAY:
+                return "TUE";
+            case Calendar.WEDNESDAY:
+                return "WED";
+            case Calendar.THURSDAY:
+                return "THU";
+            case Calendar.FRIDAY:
+                return "FRI";
+            case Calendar.SATURDAY:
+                return "SAT";
+        }
+        return "";
+    }
 }

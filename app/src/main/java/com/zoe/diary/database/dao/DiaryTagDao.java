@@ -1,6 +1,7 @@
 package com.zoe.diary.database.dao;
 
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
@@ -19,6 +20,9 @@ public interface DiaryTagDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     long insert(TagInfo tag);
+
+    @Query("delete from diary_tag where diary_id = :diaryId")
+    int delete(int diaryId);
 
     @Query("SELECT * FROM diary_tag where diary_id = :diaryId")
     List<TagInfo> getAllTag(int diaryId);

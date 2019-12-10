@@ -75,14 +75,17 @@ public class DiaryEditActivity extends BaseMVPActivity<SavePresenter, SaveContra
     DiaryImgAdapter diaryImgAdapter;
     private static final int MAX_NUM = 9;
     private List<String> imgList = new ArrayList<>();
-    private static final String KEY_YEAR = "YEAR";
-    private static final String KEY_MONTH = "MONTH";
-    private static final String KEY_DAY = "DAY";
+    public static final String KEY_YEAR = "YEAR";
+    public static final String KEY_MONTH = "MONTH";
+    public static final String KEY_DAY = "DAY";
+    public static final String KEY_ID = "DIARY_ID";
     private int year;
     private int month;
     private int day;
     private int mood = Constants.MOOD_TYPE.MOOD_3;
     private int weather = Constants.WEATHER_TYPE.WEATHER_3;
+    private int dayOfWeek;
+    private int diaryId;
 
     @Override
     protected int getLayoutResource() {
@@ -101,22 +104,35 @@ public class DiaryEditActivity extends BaseMVPActivity<SavePresenter, SaveContra
         year = intent.getIntExtra(KEY_YEAR, Calendar.getInstance().get(Calendar.YEAR));
         month = intent.getIntExtra(KEY_MONTH, Calendar.getInstance().get(Calendar.MONTH));
         day = intent.getIntExtra(KEY_DAY, Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
+        diaryId = intent.getIntExtra(KEY_ID, 0);
+        //表明，在数据库查找，进行更新
+        if (diaryId > 0) {
+            DiaryInfo diaryInfo = DbManager.getInstance().getDiaryById(diaryId);
+            year = diaryInfo.getYear();
+            month = diaryInfo.getMonth();
+            day = diaryInfo.getDay();
+            etInputTitle.setText(diaryInfo.getTitle());
+            etInputContent.setText(diaryInfo.getContent());
+            if (diaryInfo.getImg() != null && diaryInfo.getImg().size() > 0) {
+                imgList.addAll(diaryInfo.getImg());
+            }
+        }
     }
 
     private void initView() {
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, month, day);
-        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
-        StringBuilder builder = new StringBuilder();
-        builder.append(DateUtil.convertNumberToWeek(dayOfWeek))
-                .append(month + 1)
-                .append("月")
-                .append(day)
-                .append("/")
-                .append(year);
-        tvLocalDate.setText(builder.toString());
+        dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+        String builder = DateUtil.convertNumberToWeek(dayOfWeek) +
+                (month + 1) +
+                "月" +
+                day +
+                "/" +
+                year;
+        tvLocalDate.setText(builder);
         LogUtil.d("dayOfWeek:" + dayOfWeek);
         setIcon();
+        notifyImg();
     }
 
     private void setIcon() {
@@ -146,7 +162,7 @@ public class DiaryEditActivity extends BaseMVPActivity<SavePresenter, SaveContra
         calendar.set(year, month, day);
         String title = etInputTitle.getText().toString();
         long createTime = calendar.getTimeInMillis();
-        int mood =this.mood;
+        int mood = this.mood;
         int weather = this.weather;
         List<String> tag = new ArrayList<>();
         tag.add("自定义标签1");
@@ -156,6 +172,7 @@ public class DiaryEditActivity extends BaseMVPActivity<SavePresenter, SaveContra
         int year = this.year;
         int month = this.month;
         int day = this.day;
+        int dayOfWeek = this.dayOfWeek;
         int hour = calendar.get(Calendar.HOUR);
         int minute = calendar.get(Calendar.MINUTE);
         int second = calendar.get(Calendar.SECOND);
@@ -175,7 +192,14 @@ public class DiaryEditActivity extends BaseMVPActivity<SavePresenter, SaveContra
         diaryInfo.setHour(hour);
         diaryInfo.setMinute(minute);
         diaryInfo.setSecond(second);
-        DbManager.getInstance().insertDiaryInfo(diaryInfo);
+        diaryInfo.setDayOfWeek(dayOfWeek);
+        if(diaryId > 0) {
+            diaryInfo.setId(diaryId);
+            DbManager.getInstance().updateDiaryInfo(diaryInfo);
+            setResult(RESULT_OK);
+        } else {
+            DbManager.getInstance().insertDiaryInfo(diaryInfo);
+        }
         LogUtil.d(diaryInfo.toString());
         finish();
     }

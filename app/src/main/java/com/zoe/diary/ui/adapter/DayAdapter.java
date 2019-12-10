@@ -30,7 +30,7 @@ public class DayAdapter extends BaseQuickAdapter<Integer, BaseViewHolder> {
     protected void convert(@NonNull BaseViewHolder helper, Integer value) {
         helper.setText(R.id.tv_day, value > 0 ? String.valueOf(value) : "");
         helper.getView(R.id.tv_day).setEnabled(value > 0);
-        helper.getView(R.id.tv_day).setTag(String.valueOf(value));
+        helper.getView(R.id.tv_day).setTag(value);
         if (helper.getAdapterPosition() % Calendar.DAY_OF_WEEK == 0) {
             helper.setTextColor(R.id.tv_day, context.getResources().getColor(R.color.colorAccent));
         } else if ((helper.getAdapterPosition() + 1) % Calendar.DAY_OF_WEEK == 0) {

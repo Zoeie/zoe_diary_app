@@ -12,8 +12,6 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "diary_img")
 public class ImgInfo {
 
-    public ImgInfo() {}
-
     public ImgInfo(long diaryId, String imgPath) {
         this.diaryId = diaryId;
         this.imgPath = imgPath;

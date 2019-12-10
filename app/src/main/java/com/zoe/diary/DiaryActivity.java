@@ -65,7 +65,6 @@ public class DiaryActivity extends BaseMVPActivity<DiaryPresenter, DiaryContract
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         initView();
         initData();
     }
@@ -117,14 +116,5 @@ public class DiaryActivity extends BaseMVPActivity<DiaryPresenter, DiaryContract
     @OnClick(R.id.fbtn_add_diary)
     public void onAddDiary() {
         startActivity(new Intent(DiaryActivity.this, DiaryEditActivity.class));
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        List<DiaryInfo> diaryContent = DbManager.getInstance().getDiaryContent();
-        for (DiaryInfo info : diaryContent) {
-            LogUtil.d(info.toString());
-        }
     }
 }

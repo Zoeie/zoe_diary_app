@@ -34,6 +34,7 @@ public class DiaryInfo {
     public int hour;
     public int minute;
     public int second;
+    public int dayOfWeek;
 
     public int getId() {
         return id;
@@ -155,6 +156,14 @@ public class DiaryInfo {
         this.second = second;
     }
 
+    public int getDayOfWeek() {
+        return dayOfWeek;
+    }
+
+    public void setDayOfWeek(int dayOfWeek) {
+        this.dayOfWeek = dayOfWeek;
+    }
+
     @Override
     public String toString() {
         return "DiaryInfo{" +
@@ -173,6 +182,7 @@ public class DiaryInfo {
                 ", hour=" + hour +
                 ", minute=" + minute +
                 ", second=" + second +
+                ", dayOfWeek=" + dayOfWeek +
                 '}';
     }
 }

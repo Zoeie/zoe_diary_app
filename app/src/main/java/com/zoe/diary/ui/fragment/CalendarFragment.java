@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -19,6 +20,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.zoe.diary.R;
+import com.zoe.diary.ui.activity.DiaryEditActivity;
+import com.zoe.diary.ui.activity.DiaryMonthActivity;
 import com.zoe.diary.ui.adapter.DayAdapter;
 import com.zoe.diary.ui.fragment.base.BaseFragment;
 import com.zoe.diary.utils.DateUtil;
@@ -30,6 +33,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * author zoe
@@ -179,8 +183,12 @@ public class CalendarFragment extends BaseFragment implements BaseQuickAdapter.O
 
     @Override
     public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-        String tag = (String) view.getTag();
-        Toast.makeText(getActivity(), tag, Toast.LENGTH_SHORT).show();
+        int day = (int) view.getTag();
+        Intent intent = new Intent(getActivity(), DiaryEditActivity.class);
+        intent.putExtra(DiaryEditActivity.KEY_YEAR, year);
+        intent.putExtra(DiaryEditActivity.KEY_MONTH, month);
+        intent.putExtra(DiaryEditActivity.KEY_DAY, day);
+        startActivity(intent);
     }
 
     public void doAnim() {
@@ -223,5 +231,14 @@ public class CalendarFragment extends BaseFragment implements BaseQuickAdapter.O
             }
         });
         rotateAnimator.start();
+    }
+
+    @OnClick(R.id.rl_solid_bg)
+    public void onSolidBgClick() {
+        LogUtil.d("onSolidBgClick");
+        Intent intent = new Intent(getActivity(), DiaryMonthActivity.class);
+        intent.putExtra(DiaryMonthActivity.KEY_YEAR, year);
+        intent.putExtra(DiaryMonthActivity.KEY_MONTH, month);
+        startActivity(intent);
     }
 }

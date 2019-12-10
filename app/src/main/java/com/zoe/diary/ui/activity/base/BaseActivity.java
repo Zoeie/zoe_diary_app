@@ -25,6 +25,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Observer
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         setContentView(getLayoutResource());
         initialize();
     }

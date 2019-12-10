@@ -25,6 +25,7 @@
         </activity>
 
         <activity android:name=".ui.activity.DiaryEditActivity"/>
+        <activity android:name=".ui.activity.DiaryMonthActivity"/>
     </application>
 
 </manifest>

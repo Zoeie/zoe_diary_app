@@ -11,8 +11,6 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "diary_tag")
 public class TagInfo {
 
-    public TagInfo() {}
-
     public TagInfo(long diaryId, String tag) {
         this.diaryId = diaryId;
         this.tag = tag;
