@@ -3,6 +3,7 @@ package com.zoe.diary.ui.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,6 +47,28 @@ public class DiaryEditActivity extends BaseMVPActivity<SavePresenter, SaveContra
 
     @BindView(R.id.et_input_content)
     EditText etInputContent;
+
+    @BindView(R.id.iv_smile)
+    ImageView ivSmile;
+
+    @BindView(R.id.iv_weather)
+    ImageView ivWeather;
+
+    //emoji_line
+    public static final int[] moodArr = new int[]{
+            R.mipmap.emoji_1, R.mipmap.emoji_2, R.mipmap.emoji_3, R.mipmap.emoji_4,
+            R.mipmap.emoji_5, R.mipmap.emoji_6, R.mipmap.emoji_7, R.mipmap.emoji_8,
+            R.mipmap.emoji_9, R.mipmap.emoji_10, R.mipmap.emoji_11, R.mipmap.emoji_12,
+    };
+
+    //weather
+    public static final int[] weatherArr = new int[]{
+            R.mipmap.weather_1, R.mipmap.weather_2, R.mipmap.weather_3, R.mipmap.weather_4,
+            R.mipmap.weather_5, R.mipmap.weather_6, R.mipmap.weather_7, R.mipmap.weather_8,
+            R.mipmap.weather_9, R.mipmap.weather_10, R.mipmap.weather_11, R.mipmap.weather_12,
+            R.mipmap.weather_13, R.mipmap.weather_14, R.mipmap.weather_15, R.mipmap.weather_16,
+            R.mipmap.weather_17, R.mipmap.weather_18, R.mipmap.weather_19, R.mipmap.weather_20
+    };
 
     DiaryImgAdapter diaryImgAdapter;
     private static final int MAX_NUM = 9;
@@ -91,6 +114,12 @@ public class DiaryEditActivity extends BaseMVPActivity<SavePresenter, SaveContra
                 .append(year);
         tvLocalDate.setText(builder.toString());
         LogUtil.d("dayOfWeek:" + dayOfWeek);
+        setIcon();
+    }
+
+    private void setIcon() {
+        ivSmile.setImageResource(moodArr[mood]);
+        ivWeather.setImageResource(weatherArr[weather]);
     }
 
     @Override
@@ -157,17 +186,18 @@ public class DiaryEditActivity extends BaseMVPActivity<SavePresenter, SaveContra
         }
     }
 
-    @OnClick({R.id.tv_smile, R.id.tv_weather, R.id.tv_heart, R.id.tv_tag, R.id.tv_location})
+    @OnClick({R.id.iv_smile, R.id.iv_weather, R.id.iv_heart, R.id.iv_tag, R.id.iv_location})
     public void smileClick() {
-        DiaryEditBottomDialog dialogView = new DiaryEditBottomDialog(this);
+        DiaryEditBottomDialog dialogView = new DiaryEditBottomDialog(this, weather, mood);
         dialogView.setOnDialogItemClickListener(new DiaryEditBottomDialog.OnDialogItemClickListener() {
             @Override
             public void onItemClick(int type, int pos) {
                 if (type == Constants.TYPE.MOOD) {
-                    mood = pos + 1;
+                    mood = pos;
                 } else if (type == Constants.TYPE.WEATHER) {
-                    weather = pos + 1;
+                    weather = pos;
                 }
+                setIcon();
             }
         });
         dialogView.show();

@@ -10,7 +10,7 @@ import com.zoe.diary.R;
 import com.zoe.diary.ui.adapter.DiaryAdapter;
 import com.zoe.diary.ui.dialog.DiaryDateBottomDialog;
 import com.zoe.diary.ui.fragment.base.BaseFragment;
-import com.zoe.diary.ui.transform.DiaryPageTranform;
+import com.zoe.diary.ui.transform.DiaryPageTransformer;
 import com.zoe.diary.utils.LogUtil;
 
 import java.util.ArrayList;
@@ -79,7 +79,7 @@ public class DiaryFragment extends BaseFragment {
 
     private void initView() {
         viewPager.setOffscreenPageLimit(fragmentList.size());
-        viewPager.setPageTransformer(false, new DiaryPageTranform());
+        viewPager.setPageTransformer(false, new DiaryPageTransformer());
         diaryAdapter = new DiaryAdapter(getChildFragmentManager(), fragmentList);
         viewPager.setAdapter(diaryAdapter);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {

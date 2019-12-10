@@ -14,6 +14,7 @@ import android.widget.GridView;
 
 import com.zoe.diary.R;
 import com.zoe.diary.constant.Constants;
+import com.zoe.diary.ui.activity.DiaryEditActivity;
 import com.zoe.diary.ui.adapter.DiaryIconAdapter;
 import com.zoe.diary.utils.DisplayUtil;
 
@@ -28,23 +29,15 @@ public class DiaryEditBottomDialog extends Dialog implements AdapterView.OnItemC
     @BindView(R.id.grid_weather)
     GridView gridWeather;
 
-    private static final int[] moodArr = new int[]{
-            R.mipmap.mood_smile, R.mipmap.mood_smile, R.mipmap.mood_smile, R.mipmap.mood_smile,
-            R.mipmap.mood_smile, R.mipmap.mood_smile, R.mipmap.mood_smile, R.mipmap.mood_smile,
-            R.mipmap.mood_smile, R.mipmap.mood_smile, R.mipmap.mood_smile, R.mipmap.mood_smile,
-    };
-
-    private static final int[] weatherArr = new int[]{
-            R.mipmap.weather_cloudy, R.mipmap.weather_cloudy, R.mipmap.weather_cloudy, R.mipmap.weather_cloudy,
-            R.mipmap.weather_cloudy, R.mipmap.weather_cloudy, R.mipmap.weather_cloudy, R.mipmap.weather_cloudy,
-            R.mipmap.weather_cloudy, R.mipmap.weather_cloudy, R.mipmap.weather_cloudy, R.mipmap.weather_cloudy,
-    };
-
     private Context context;
+    private int weather;
+    private int mood;
 
-    public DiaryEditBottomDialog(Context context) {
+    public DiaryEditBottomDialog(Context context,int weather,int mood) {
         super(context, R.style.MyDialog);
         this.context = context;
+        this.weather = weather;
+        this.mood = mood;
     }
 
     @Override
@@ -58,8 +51,8 @@ public class DiaryEditBottomDialog extends Dialog implements AdapterView.OnItemC
     }
 
     private void initView() {
-        gridMood.setAdapter(new DiaryIconAdapter(context, moodArr));
-        gridWeather.setAdapter(new DiaryIconAdapter(context, weatherArr));
+        gridMood.setAdapter(new DiaryIconAdapter(context, DiaryEditActivity.moodArr , mood));
+        gridWeather.setAdapter(new DiaryIconAdapter(context, DiaryEditActivity.weatherArr, weather));
         gridMood.setOnItemClickListener(this);
         gridWeather.setOnItemClickListener(this);
     }

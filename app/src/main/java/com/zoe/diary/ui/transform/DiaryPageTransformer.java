@@ -5,11 +5,12 @@ import android.view.View;
 
 import androidx.viewpager.widget.ViewPager;
 
-public class DiaryPageTranform implements ViewPager.PageTransformer {
+public class DiaryPageTransformer implements ViewPager.PageTransformer {
 
-    private float MIN_SCALE = 0.8f;
-    private float MIN_ALPHA = 0.5f;
-    private float MIN_TRANSLATE = 0.5f;
+    private static final float MIN_SCALE = 0.9f;
+    private static final  float MIN_ALPHA = 0.5f;
+    private static final  float MIN_TranslationZ= 0.8f;
+    private static final  float MIN_TRANSLATE = 0.5f;
 
     @Override
     public void transformPage(View page, float position) {
@@ -20,14 +21,14 @@ public class DiaryPageTranform implements ViewPager.PageTransformer {
         } else {
             //应该缩放的大小
             float curScale = (1 - Math.abs(position)) * (1 - MIN_SCALE) + MIN_SCALE;
-            curScale = Math.max(curScale, MIN_ALPHA);
+            curScale = Math.max(curScale, MIN_SCALE);
             float curAlpha = (1 - Math.abs(position)) * (1 - MIN_ALPHA) + MIN_ALPHA;
-            curAlpha = Math.max(curScale, curAlpha);
+            curAlpha = Math.max(curAlpha, MIN_ALPHA);
             page.setAlpha(curAlpha);
             page.setScaleX(curScale);
             page.setScaleY(curScale);
             float curTranZ = (1 - Math.abs(position)) * (1 - MIN_ALPHA) + MIN_ALPHA;
-            curAlpha = Math.max(curTranZ, MIN_ALPHA);
+            curTranZ = Math.max(curTranZ, MIN_TranslationZ);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 page.setTranslationZ(curTranZ);
             }
