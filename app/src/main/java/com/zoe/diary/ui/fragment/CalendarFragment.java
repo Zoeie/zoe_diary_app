@@ -6,13 +6,12 @@ import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.animation.OvershootInterpolator;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
@@ -20,6 +19,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.zoe.diary.R;
+import com.zoe.diary.database.DbManager;
+import com.zoe.diary.database.domain.DiaryInfo;
 import com.zoe.diary.ui.activity.DiaryEditActivity;
 import com.zoe.diary.ui.activity.DiaryMonthActivity;
 import com.zoe.diary.ui.adapter.DayAdapter;
@@ -29,8 +30,9 @@ import com.zoe.diary.utils.LogUtil;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.List;
-import java.util.stream.Stream;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -65,6 +67,12 @@ public class CalendarFragment extends BaseFragment implements BaseQuickAdapter.O
 
     @BindView(R.id.tv_month_num_in_solid)
     TextView tvMonthNumInSolid;
+
+    @BindView(R.id.pb)
+    ProgressBar pb;
+
+    @BindView(R.id.tv_write_all_days_count)
+    TextView tvWriteAllDaysCount;
 
     private boolean showCalendar = true;
     private boolean isExecuteAnim = false;
@@ -146,6 +154,7 @@ public class CalendarFragment extends BaseFragment implements BaseQuickAdapter.O
 
     private void initView() {
         setMonthUI();
+        setSolidBgData();
         rlCalendar.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
@@ -159,6 +168,20 @@ public class CalendarFragment extends BaseFragment implements BaseQuickAdapter.O
                 rlSolidBg.setRotationY(180); //默认先旋转180度
             }
         });
+    }
+
+    //设置纯色背景的数据
+    private void setSolidBgData() {
+        List<DiaryInfo> diaryByMonth = DbManager.getInstance().getDiaryByMonth(year, month);
+        HashSet<DiaryInfo> hashSet = new HashSet<>(diaryByMonth);
+        pb.setProgress(hashSet.size());
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, month);
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        int daysInMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+        pb.setMax(daysInMonth);
+        tvWriteAllDaysCount.setText(String.format(Locale.getDefault(), "%d/%d", hashSet.size(), daysInMonth));
     }
 
     private void setMonthUI() {
@@ -176,6 +199,7 @@ public class CalendarFragment extends BaseFragment implements BaseQuickAdapter.O
     public void notifyUpdateUI() {
         setMonthUI();
         computerDayList();
+        setSolidBgData();
         if (dayAdapter != null) {
             dayAdapter.notifyDataSetChanged();
         }

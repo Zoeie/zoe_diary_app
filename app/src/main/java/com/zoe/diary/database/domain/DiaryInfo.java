@@ -1,5 +1,6 @@
 package com.zoe.diary.database.domain;
 
+import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
@@ -184,5 +185,19 @@ public class DiaryInfo {
                 ", second=" + second +
                 ", dayOfWeek=" + dayOfWeek +
                 '}';
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        DiaryInfo info = (DiaryInfo) obj;
+        if(info == null) {
+            return false;
+        }
+        return (this.year == info.year) && (this.month == info.month) && (this.day == info.day);
+    }
+
+    @Override
+    public int hashCode() {
+        return year;
     }
 }

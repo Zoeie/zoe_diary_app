@@ -94,6 +94,7 @@
                 android:orientation="horizontal">
 
                 <ProgressBar
+                    android:id="@+id/pb"
                     style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                     android:layout_width="100dp"
                     android:layout_height="5dp"
@@ -102,6 +103,7 @@
                     android:progress="1" />
 
                 <TextView
+                    android:id="@+id/tv_write_all_days_count"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
