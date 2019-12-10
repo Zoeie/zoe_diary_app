@@ -2,7 +2,9 @@ package com.zoe.diary.ui.adapter;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -44,15 +46,20 @@ public class DiaryMonthListAdapter extends BaseQuickAdapter<DiaryInfo, BaseViewH
                 (item.getDayOfWeek() == Calendar.SUNDAY) ? R.color.colorAccent :
                         (item.getDayOfWeek() == Calendar.SATURDAY ? R.color.colorPrimary : R.color.color_black)
         ));
+        helper.setText(R.id.tv_content,String.valueOf(item.content));
         helper.setText(R.id.tv_title,String.valueOf(item.title));
-        helper.setVisible(R.id.tv_title, !TextUtils.isEmpty(item.title));
+        helper.setText(R.id.tv_title_other,String.valueOf(item.title));
         helper.setImageResource(R.id.iv_weather, DiaryEditActivity.weatherArr[item.weather]);
+        RelativeLayout rlContentArea = helper.getView(R.id.rl_content_area);
         ImageView ivImg = helper.getView(R.id.iv_img);
         List<String> img = item.getImg();
+        helper.setVisible(R.id.tv_title, (!TextUtils.isEmpty(item.title) && (img != null && img.size() > 0)));
         if (img != null && img.size() > 0) {
+            rlContentArea.setVisibility(View.GONE);
             Glide.with(context).load(img.get(0)).centerCrop().into(ivImg);
         } else {
             ivImg.setImageResource(android.R.color.transparent);
+            rlContentArea.setVisibility(View.VISIBLE);
         }
     }
 }
