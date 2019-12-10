@@ -116,6 +116,8 @@ public class DiaryEditActivity extends BaseMVPActivity<SavePresenter, SaveContra
             if (diaryInfo.getImg() != null && diaryInfo.getImg().size() > 0) {
                 imgList.addAll(diaryInfo.getImg());
             }
+            mood = diaryInfo.getMood();
+            weather = diaryInfo.getWeather();
         }
     }
 
