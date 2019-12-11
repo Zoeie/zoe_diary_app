@@ -16,9 +16,6 @@ public class MyFragment extends BaseFragment {
     private static final String KEY_TAG = "KEY_TAG";
     private String tag = "";
 
-    @BindView(R.id.tv_text)
-    TextView tvText;
-
     public static MyFragment getInstance(String tag) {
         LogUtil.d("tag:" + tag);
         MyFragment myFragment = new MyFragment();
@@ -43,7 +40,7 @@ public class MyFragment extends BaseFragment {
     }
 
     private void initView() {
-        tvText.setText(tag);
+
     }
 
     @Override

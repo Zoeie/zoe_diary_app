@@ -1,14 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools">
-    <TextView
-        android:id="@+id/tv_text"
-        android:layout_width="wrap_content"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <TextView
+            android:id="@+id/tv_local_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="设置"
+            android:textColor="@color/color_black"
+            android:textSize="20sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:background="@color/color_dbdbdb"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:paddingStart="20dp">
+
+        <ImageView
+            android:id="@+id/iv_user_icon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/ic_launcher" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="20dp"
+            android:layout_toEndOf="@id/iv_user_icon"
+            android:text="未登录"
+            android:textColor="@color/color_black"
+            android:textSize="16sp" />
+    </RelativeLayout>
+
+    <com.zoe.diary.ui.widget.UserSettingItem
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:textColor="@android:color/holo_red_dark"
-        android:textSize="30sp"
-        tools:text="Fragment" />
-</RelativeLayout>
+        app:icon="@mipmap/ic_launcher"
+        app:sub_icon="@mipmap/ic_launcher"
+        app:title="日记备份及恢复" />
+
+    <com.zoe.diary.ui.widget.UserSettingItem
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:icon="@mipmap/ic_launcher"
+        app:title="日记锁设置" />
+
+    <com.zoe.diary.ui.widget.UserSettingItem
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:icon="@mipmap/ic_launcher"
+        app:message="21:00"
+        app:title="提醒写日记" />
+
+    <com.zoe.diary.ui.widget.UserSettingItem
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:icon="@mipmap/ic_launcher"
+        app:title="字体设置" />
+
+    <com.zoe.diary.ui.widget.UserSettingItem
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:icon="@mipmap/ic_launcher"
+        app:sub_icon="@mipmap/ic_launcher"
+        app:title="导出日记" />
+
+    <com.zoe.diary.ui.widget.UserSettingItem
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:icon="@mipmap/ic_launcher"
+        app:title="高级账户" />
+
+    <com.zoe.diary.ui.widget.UserSettingItem
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:icon="@mipmap/ic_launcher"
+        app:sub_title="精选淘宝无门槛优惠券"
+        app:title="每日商城" />
+
+    <com.zoe.diary.ui.widget.UserSettingItem
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:icon="@mipmap/ic_launcher"
+        app:title="系统通知" />
+
+    <com.zoe.diary.ui.widget.UserSettingItem
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:icon="@mipmap/ic_launcher"
+        app:title="关于我们" />
+</LinearLayout>
