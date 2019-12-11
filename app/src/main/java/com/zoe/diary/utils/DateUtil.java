@@ -42,19 +42,19 @@ public class DateUtil {
     public static String convertNumberToWeek(int dayOfWeek) {
         switch (dayOfWeek) {
             case Calendar.SUNDAY:
-                return "星期天";
+                return "周天";
             case Calendar.MONDAY:
-                return "星期一";
+                return "周一";
             case Calendar.TUESDAY:
-                return "星期二";
+                return "周二";
             case Calendar.WEDNESDAY:
-                return "星期三";
+                return "周三";
             case Calendar.THURSDAY:
-                return "星期四";
+                return "周四";
             case Calendar.FRIDAY:
-                return "星期五";
+                return "周五";
             case Calendar.SATURDAY:
-                return "星期六";
+                return "周六";
         }
         return "";
     }

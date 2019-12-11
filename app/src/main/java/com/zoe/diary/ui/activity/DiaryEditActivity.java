@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,6 +29,7 @@ import com.zoe.diary.ui.adapter.DiaryImgAdapter;
 import com.zoe.diary.ui.dialog.DiaryEditBottomDialog;
 import com.zoe.diary.ui.widget.GlideEngine;
 import com.zoe.diary.utils.DateUtil;
+import com.zoe.diary.utils.DisplayUtil;
 import com.zoe.diary.utils.LogUtil;
 
 import java.util.ArrayList;
@@ -63,6 +65,9 @@ public class DiaryEditActivity extends BaseMVPActivity<SavePresenter, SaveContra
 
     @BindView(R.id.rl_modify_overlay)
     RelativeLayout rlOverlay;
+
+    @BindView(R.id.ll_circle_indicator)
+    LinearLayout llCircleIndicator;
 
     //emoji_line
     public static final int[] moodArr = new int[]{
@@ -136,6 +141,7 @@ public class DiaryEditActivity extends BaseMVPActivity<SavePresenter, SaveContra
         calendar.set(year, month, day);
         dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
         String builder = DateUtil.convertNumberToWeek(dayOfWeek) +
+                "." +
                 (month + 1) +
                 "月" +
                 day +
@@ -265,6 +271,8 @@ public class DiaryEditActivity extends BaseMVPActivity<SavePresenter, SaveContra
     }
 
     private void notifyImg() {
+        addCircleIndicator();
+        updateCircleIndicator();
         rlDelete.setVisibility(imgList.size() > 0 ? View.VISIBLE : View.GONE);
         rlOverlay.setVisibility(imgList.size() > 0 ? View.VISIBLE : View.GONE);
         if (diaryImgAdapter == null) {
@@ -273,6 +281,25 @@ public class DiaryEditActivity extends BaseMVPActivity<SavePresenter, SaveContra
             imgViewPager.addOnPageChangeListener(this);
         } else {
             diaryImgAdapter.notifyDataSetChanged();
+        }
+    }
+
+    private void addCircleIndicator() {
+        llCircleIndicator.removeAllViews();
+        llCircleIndicator.setVisibility(imgList.size() > 1 ? View.VISIBLE : View.GONE);
+        for (int i = 0; i < imgList.size(); i++) {
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(DisplayUtil.dip2px(this, 6),
+                    DisplayUtil.dip2px(this, 6));
+            params.setMarginStart(DisplayUtil.dip2px(this, 10));
+            View circleView = View.inflate(this, R.layout.circle_view, null);
+            llCircleIndicator.addView(circleView, params);
+        }
+    }
+
+    private void updateCircleIndicator() {
+        for (int i = 0; i < llCircleIndicator.getChildCount(); i++) {
+            llCircleIndicator.getChildAt(i).setBackgroundResource(((i == selectPicPos) ? R.drawable.circle_selected_bg:
+                    R.drawable.circle_normal_bg));
         }
     }
 
@@ -301,6 +328,7 @@ public class DiaryEditActivity extends BaseMVPActivity<SavePresenter, SaveContra
     @Override
     public void onPageSelected(int position) {
         selectPicPos = position;
+        updateCircleIndicator();
     }
 
     @Override
