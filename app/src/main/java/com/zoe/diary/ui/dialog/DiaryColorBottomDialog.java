@@ -29,7 +29,7 @@ import butterknife.OnClick;
 public class DiaryColorBottomDialog extends Dialog implements AdapterView.OnItemClickListener {
 
     private static final String[] colorArr = new String[] {
-       "#d81e06","#d6204b","#e0620d","#ea9518","#f6ef37","#0e932e",
+       "#D81B60","#d81e06","#e0620d","#ea9518","#f6ef37","#0e932e",
        "#112079","#0061b2","#17abe3","#13227a","#82529d","#db639b",
        "#83c6c2","#aad08f","#dbdbdb","#bfbfbf","#8a8a8a","#515151",
        "#2c2c2c"
