@@ -52,4 +52,8 @@ public class Constants {
         public static final int COLOR_PIC = 1;
         public static final int COLOR_SOLID = 2;
     }
+
+    public static final class MSG {
+        public static final int NEW_DIARY_NOTIFY = 0x10001;
+    }
 }

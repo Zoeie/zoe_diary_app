@@ -315,4 +315,8 @@ public class CalendarFragment extends BaseFragment implements BaseQuickAdapter.O
             rlSolidBg.setBackgroundResource(R.color.colorAccent);
         }
     }
+
+    public void updateDiaryShowUI() {
+        setSolidBgData();
+    }
 }

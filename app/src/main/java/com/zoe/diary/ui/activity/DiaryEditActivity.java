@@ -20,6 +20,7 @@ import com.zoe.diary.database.domain.DiaryInfo;
 import com.zoe.diary.net.request.save.SaveContract;
 import com.zoe.diary.net.request.save.SavePresenter;
 import com.zoe.diary.net.response.DiarySaveResponse;
+import com.zoe.diary.notify.DataObservable;
 import com.zoe.diary.ui.activity.base.BaseMVPActivity;
 import com.zoe.diary.ui.adapter.DiaryImgAdapter;
 import com.zoe.diary.ui.dialog.DiaryEditBottomDialog;
@@ -201,6 +202,7 @@ public class DiaryEditActivity extends BaseMVPActivity<SavePresenter, SaveContra
             setResult(RESULT_OK);
         } else {
             DbManager.getInstance().insertDiaryInfo(diaryInfo);
+            DataObservable.getInstance().setData(Constants.MSG.NEW_DIARY_NOTIFY);
         }
         LogUtil.d(diaryInfo.toString());
         finish();

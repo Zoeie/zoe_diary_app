@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.viewpager.widget.ViewPager;
 
 import com.zoe.diary.R;
+import com.zoe.diary.constant.Constants;
 import com.zoe.diary.ui.adapter.DiaryAdapter;
 import com.zoe.diary.ui.dialog.DiaryDateBottomDialog;
 import com.zoe.diary.ui.fragment.base.BaseFragment;
@@ -16,6 +17,7 @@ import com.zoe.diary.utils.LogUtil;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Observable;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -98,11 +100,11 @@ public class DiaryFragment extends BaseFragment {
 
             }
         });
-        update();
+        setYearTitle();
         viewPager.setCurrentItem(targetMonth);
     }
 
-    private void update() {
+    private void setYearTitle() {
         tvDate.setText(String.valueOf(targetYear));
     }
 
@@ -133,7 +135,7 @@ public class DiaryFragment extends BaseFragment {
                 targetYear = year;
                 targetMonth = month;
                 if (yearChanged) {
-                    update();
+                    setYearTitle();
                     notifyDate();
                 }
                 viewPager.setCurrentItem(targetMonth);
@@ -154,5 +156,22 @@ public class DiaryFragment extends BaseFragment {
         int currentItem = viewPager.getCurrentItem();
         CalendarFragment fragment = fragmentList.get(currentItem);
         fragment.updateSolidBg();
+    }
+
+    @Override
+    public void update(Observable observable, Object data) {
+        super.update(observable, data);
+        if(data instanceof Integer) {
+            int msg = (int) data;
+            if(msg == Constants.MSG.NEW_DIARY_NOTIFY) {
+                updateDiaryShowUI();
+            }
+        }
+    }
+
+    private void updateDiaryShowUI() {
+        int currentItem = viewPager.getCurrentItem();
+        CalendarFragment fragment = fragmentList.get(currentItem);
+        fragment.updateDiaryShowUI();
     }
 }
