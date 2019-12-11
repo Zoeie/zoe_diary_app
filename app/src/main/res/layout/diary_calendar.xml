@@ -7,6 +7,7 @@
     android:layout_height="wrap_content"
     android:textColor="@android:color/black"
     android:gravity="center"
+    android:textStyle="bold"
     android:drawableBottom="@drawable/black_vertical_line"
     tools:text="1">
 

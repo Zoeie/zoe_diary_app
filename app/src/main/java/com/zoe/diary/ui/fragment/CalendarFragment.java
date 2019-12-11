@@ -191,6 +191,12 @@ public class CalendarFragment extends BaseFragment implements BaseQuickAdapter.O
         tvWriteAllDaysCount.setText(String.format(Locale.getDefault(), "%d/%d", hashSet.size(), daysInMonth));
     }
 
+    private void updateDayDiaryDate() {
+        if(dayAdapter != null) {
+            dayAdapter.notifyDayDiary(year, month);
+        }
+    }
+
     private void setMonthUI() {
         //月份从0开始的
         tvMonthNumber.setText(String.valueOf(month + 1));
@@ -203,12 +209,11 @@ public class CalendarFragment extends BaseFragment implements BaseQuickAdapter.O
         this.year = year;
     }
 
+    //当日历年份切换时
     public void notifyUpdateUI() {
         resetUI();
         computerDayList();
-        if (dayAdapter != null) {
-            dayAdapter.notifyDataSetChanged();
-        }
+        updateDayDiaryDate();
     }
 
     private void resetUI() {
@@ -316,7 +321,9 @@ public class CalendarFragment extends BaseFragment implements BaseQuickAdapter.O
         }
     }
 
+    //当添加新的日历时
     public void updateDiaryShowUI() {
         setSolidBgData();
+        updateDayDiaryDate();
     }
 }
