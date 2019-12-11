@@ -26,6 +26,7 @@
 
         <activity android:name=".ui.activity.DiaryEditActivity"/>
         <activity android:name=".ui.activity.DiaryMonthActivity"/>
+        <activity android:name=".ui.activity.DiaryImgSortActivity"/>
     </application>
 
 </manifest>

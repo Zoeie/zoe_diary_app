@@ -2,8 +2,10 @@ package com.zoe.diary.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,14 +32,13 @@ import com.zoe.diary.utils.LogUtil;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
 public class DiaryEditActivity extends BaseMVPActivity<SavePresenter, SaveContract.IView>
-        implements SaveContract.IView {
+        implements SaveContract.IView, ViewPager.OnPageChangeListener {
 
     @BindView(R.id.img_view_pager)
     ViewPager imgViewPager;
@@ -56,6 +57,12 @@ public class DiaryEditActivity extends BaseMVPActivity<SavePresenter, SaveContra
 
     @BindView(R.id.iv_weather)
     ImageView ivWeather;
+
+    @BindView(R.id.rl_delete_img)
+    RelativeLayout rlDelete;
+
+    @BindView(R.id.rl_modify_overlay)
+    RelativeLayout rlOverlay;
 
     //emoji_line
     public static final int[] moodArr = new int[]{
@@ -87,6 +94,8 @@ public class DiaryEditActivity extends BaseMVPActivity<SavePresenter, SaveContra
     private int weather = Constants.WEATHER_TYPE.WEATHER_3;
     private int dayOfWeek;
     private int diaryId;
+    private int selectPicPos = 0;
+    private static final int REQUEST_CODE = 88;
 
     @Override
     protected int getLayoutResource() {
@@ -218,6 +227,19 @@ public class DiaryEditActivity extends BaseMVPActivity<SavePresenter, SaveContra
                 .forResult(PictureConfig.CHOOSE_REQUEST);
     }
 
+    @OnClick(R.id.rl_delete_img)
+    public void deleteImg() {
+        imgList.remove(selectPicPos);
+        notifyImg();
+    }
+
+    @OnClick(R.id.rl_modify_overlay)
+    public void modifyOverlay() {
+        Intent intent = new Intent(this, DiaryImgSortActivity.class);
+        intent.putStringArrayListExtra(DiaryImgSortActivity.KEY_IMG_LIST, (ArrayList<String>) imgList);
+        startActivityForResult(intent, REQUEST_CODE);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -230,14 +252,25 @@ public class DiaryEditActivity extends BaseMVPActivity<SavePresenter, SaveContra
                     }
                     notifyImg();
                     break;
+                case REQUEST_CODE:
+                    ArrayList<String> listExtra = data.getStringArrayListExtra(DiaryImgSortActivity.KEY_IMG_LIST);
+                    if(listExtra != null) {
+                        imgList.clear();
+                        imgList.addAll(listExtra);
+                        notifyImg();
+                    }
+                    break;
             }
         }
     }
 
     private void notifyImg() {
+        rlDelete.setVisibility(imgList.size() > 0 ? View.VISIBLE : View.GONE);
+        rlOverlay.setVisibility(imgList.size() > 0 ? View.VISIBLE : View.GONE);
         if (diaryImgAdapter == null) {
             diaryImgAdapter = new DiaryImgAdapter(this, imgList);
             imgViewPager.setAdapter(diaryImgAdapter);
+            imgViewPager.addOnPageChangeListener(this);
         } else {
             diaryImgAdapter.notifyDataSetChanged();
         }
@@ -258,5 +291,20 @@ public class DiaryEditActivity extends BaseMVPActivity<SavePresenter, SaveContra
             }
         });
         dialogView.show();
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        selectPicPos = position;
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
     }
 }
