@@ -5,11 +5,17 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.luck.picture.lib.PictureSelector;
+import com.luck.picture.lib.config.PictureConfig;
+import com.luck.picture.lib.entity.LocalMedia;
+import com.zoe.diary.constant.Constants;
 import com.zoe.diary.database.DbManager;
+import com.zoe.diary.database.domain.DiaryColor;
 import com.zoe.diary.database.domain.DiaryInfo;
 import com.zoe.diary.net.request.diary.DiaryContract;
 import com.zoe.diary.net.request.diary.DiaryPresenter;
@@ -116,5 +122,35 @@ public class DiaryActivity extends BaseMVPActivity<DiaryPresenter, DiaryContract
     @OnClick(R.id.fbtn_add_diary)
     public void onAddDiary() {
         startActivity(new Intent(DiaryActivity.this, DiaryEditActivity.class));
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case PictureConfig.CHOOSE_REQUEST:
+                    List<LocalMedia> selectList = PictureSelector.obtainMultipleResult(data);
+                    if (selectList != null && selectList.size() > 0) {
+                        String path = selectList.get(0).getCutPath();
+                        if (fragmentList[lastFragment] != null && fragmentList[lastFragment] instanceof DiaryFragment) {
+                            DiaryFragment diaryFragment = (DiaryFragment) fragmentList[lastFragment];
+                            int targetYear = diaryFragment.getTargetYear();
+                            int targetMonth = diaryFragment.getTargetMonth();
+                            DiaryColor diaryColorByDate = DbManager.getInstance().getDiaryColorByDate(targetYear, targetMonth);
+                            if (diaryColorByDate == null) {
+                                DiaryColor color = new DiaryColor(targetYear, targetMonth, Constants.COLOR_TYPE.COLOR_PIC, path, "#D81B60");
+                                DbManager.getInstance().insertDiaryColor(color);
+                            } else {
+                                diaryColorByDate.setColorType(Constants.COLOR_TYPE.COLOR_PIC);
+                                diaryColorByDate.setImgPath(path);
+                                DbManager.getInstance().insertDiaryColor(diaryColorByDate);
+                            }
+                            diaryFragment.updateSolidBg();
+                        }
+                    }
+                    break;
+            }
+        }
     }
 }

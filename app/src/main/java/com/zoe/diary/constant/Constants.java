@@ -47,4 +47,9 @@ public class Constants {
         public static final int WEATHER_18 = 18;
         public static final int WEATHER_19 = 19;
     }
+
+    public static final class COLOR_TYPE {
+        public static final int COLOR_PIC = 1;
+        public static final int COLOR_SOLID = 2;
+    }
 }

@@ -3,6 +3,7 @@ package com.zoe.diary.database;
 import androidx.room.Transaction;
 
 import com.zoe.diary.database.db.AppDatabase;
+import com.zoe.diary.database.domain.DiaryColor;
 import com.zoe.diary.database.domain.DiaryInfo;
 import com.zoe.diary.database.domain.ImgInfo;
 import com.zoe.diary.database.domain.TagInfo;
@@ -81,7 +82,7 @@ public class DbManager {
     }
 
     @Transaction
-    public List<DiaryInfo> getDiaryByMonth(int year,int month) {
+    public List<DiaryInfo> getDiaryByMonth(int year, int month) {
         List<DiaryInfo> diaryContent = AppDatabase.getDatabase().getDiaryContentDao().getDiaryByMonth(year, month);
         for (DiaryInfo diaryInfo : diaryContent) {
             List<TagInfo> tagInfoList = AppDatabase.getDatabase().getDiaryTagDao().getAllTag(diaryInfo.getId());
@@ -116,6 +117,17 @@ public class DbManager {
         }
         diaryInfo.setImg(imgList);
         return diaryInfo;
+    }
+
+    public long insertDiaryColor(DiaryColor diaryColor) {
+        long colorId = AppDatabase.getDatabase().getDiaryColorDao().insert(diaryColor);
+        LogUtil.d("colorId:" + colorId);
+        return colorId;
+    }
+
+    public DiaryColor getDiaryColorByDate(int year, int month) {
+        DiaryColor diaryColorByDate = AppDatabase.getDatabase().getDiaryColorDao().getDiaryColorByDate(year, month);
+        return diaryColorByDate;
     }
 
 }

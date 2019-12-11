@@ -5,6 +5,10 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -17,9 +21,12 @@ import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.zoe.diary.R;
+import com.zoe.diary.constant.Constants;
 import com.zoe.diary.database.DbManager;
+import com.zoe.diary.database.domain.DiaryColor;
 import com.zoe.diary.database.domain.DiaryInfo;
 import com.zoe.diary.ui.activity.DiaryEditActivity;
 import com.zoe.diary.ui.activity.DiaryMonthActivity;
@@ -154,8 +161,7 @@ public class CalendarFragment extends BaseFragment implements BaseQuickAdapter.O
     }
 
     private void initView() {
-        setMonthUI();
-        setSolidBgData();
+        resetUI();
         rlCalendar.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
@@ -198,12 +204,17 @@ public class CalendarFragment extends BaseFragment implements BaseQuickAdapter.O
     }
 
     public void notifyUpdateUI() {
-        setMonthUI();
+        resetUI();
         computerDayList();
-        setSolidBgData();
         if (dayAdapter != null) {
             dayAdapter.notifyDataSetChanged();
         }
+    }
+
+    private void resetUI() {
+        setMonthUI();
+        setSolidBgData();
+        updateSolidBg();
     }
 
     @Override
@@ -270,7 +281,38 @@ public class CalendarFragment extends BaseFragment implements BaseQuickAdapter.O
     @OnClick(R.id.ll_show_color_dialog)
     public void showColorDialog() {
         LogUtil.d("showColorDialog");
-        DiaryColorBottomDialog diaryColorBottomDialog = new DiaryColorBottomDialog(getActivity());
+        DiaryColorBottomDialog diaryColorBottomDialog = new DiaryColorBottomDialog(getActivity(), rlSolidBg.getWidth(), rlSolidBg.getHeight());
+        diaryColorBottomDialog.setOnColorSelectedListener(new DiaryColorBottomDialog.OnColorSelectedListener() {
+            @Override
+            public void colorSelect(int pos, String color) {
+                DiaryColor diaryColorByDate = DbManager.getInstance().getDiaryColorByDate(year, month);
+                if (diaryColorByDate == null) {
+                    DiaryColor diaryColor = new DiaryColor(year, month, Constants.COLOR_TYPE.COLOR_SOLID, "", color);
+                    DbManager.getInstance().insertDiaryColor(diaryColor);
+                    updateSolidBg();
+                } else {
+                    diaryColorByDate.setColor(color);
+                    diaryColorByDate.setColorType(Constants.COLOR_TYPE.COLOR_SOLID);
+                    DbManager.getInstance().insertDiaryColor(diaryColorByDate);
+                    updateSolidBg();
+                    LogUtil.d("diaryColor:" + diaryColorByDate.getId() + ",color:" + diaryColorByDate.getColor());
+                }
+            }
+        });
         diaryColorBottomDialog.show();
+    }
+
+    public void updateSolidBg() {
+        DiaryColor diaryColorByDate = DbManager.getInstance().getDiaryColorByDate(year, month);
+        if (diaryColorByDate != null) {
+            if (diaryColorByDate.colorType == Constants.COLOR_TYPE.COLOR_PIC) {
+                Bitmap bitmap = BitmapFactory.decodeFile(diaryColorByDate.imgPath);
+                rlSolidBg.setBackground(new BitmapDrawable(bitmap));
+            } else if (diaryColorByDate.colorType == Constants.COLOR_TYPE.COLOR_SOLID) {
+                rlSolidBg.setBackgroundColor(Color.parseColor(diaryColorByDate.getColor()));
+            }
+        } else {
+            rlSolidBg.setBackgroundResource(R.color.colorAccent);
+        }
     }
 }

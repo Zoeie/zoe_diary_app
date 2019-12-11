@@ -107,7 +107,7 @@ public class DiaryFragment extends BaseFragment {
     }
 
     private void notifyDate() {
-        for (int i = 0; i < fragmentList.size();i++) {
+        for (int i = 0; i < fragmentList.size(); i++) {
             CalendarFragment fragment = fragmentList.get(i);
             fragment.setYear(targetYear);
             fragment.notifyUpdateUI();
@@ -140,5 +140,19 @@ public class DiaryFragment extends BaseFragment {
             }
         });
         diaryDateBottomDialog.show();
+    }
+
+    public int getTargetYear() {
+        return targetYear;
+    }
+
+    public int getTargetMonth() {
+        return targetMonth;
+    }
+
+    public void updateSolidBg() {
+        int currentItem = viewPager.getCurrentItem();
+        CalendarFragment fragment = fragmentList.get(currentItem);
+        fragment.updateSolidBg();
     }
 }

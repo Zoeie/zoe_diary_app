@@ -8,21 +8,25 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import com.luck.picture.lib.PictureSelector;
+import com.luck.picture.lib.config.PictureConfig;
+import com.luck.picture.lib.config.PictureMimeType;
 import com.zoe.diary.R;
-import com.zoe.diary.ui.activity.DiaryEditActivity;
 import com.zoe.diary.ui.adapter.DiaryColorAdapter;
-import com.zoe.diary.ui.adapter.DiaryIconAdapter;
+import com.zoe.diary.ui.widget.GlideEngine;
 import com.zoe.diary.utils.DisplayUtil;
+import com.zoe.diary.utils.LogUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
-public class DiaryColorBottomDialog extends Dialog {
+public class DiaryColorBottomDialog extends Dialog implements AdapterView.OnItemClickListener {
 
     private static final String[] colorArr = new String[] {
        "#d81e06","#d6204b","#e0620d","#ea9518","#f6ef37","#0e932e",
@@ -34,14 +38,16 @@ public class DiaryColorBottomDialog extends Dialog {
     @BindView(R.id.grid_color)
     GridView gridColor;
 
-    @BindView(R.id.tv_select_pic)
-    TextView tvSelectPic;
-
     private Context context;
+    private OnColorSelectedListener colorSelectedListener;
+    private int w;
+    private int h;
 
-    public DiaryColorBottomDialog(@NonNull Context context) {
+    public DiaryColorBottomDialog(@NonNull Context context, int w, int h) {
         super(context, R.style.MyDialog);
         this.context = context;
+        this.w = w;
+        this.h = h;
     }
 
     @Override
@@ -56,6 +62,7 @@ public class DiaryColorBottomDialog extends Dialog {
 
     private void initView() {
         gridColor.setAdapter(new DiaryColorAdapter(context, colorArr));
+        gridColor.setOnItemClickListener(this);
     }
 
     private void setDialogAttr() {
@@ -70,5 +77,35 @@ public class DiaryColorBottomDialog extends Dialog {
         params.height = WindowManager.LayoutParams.WRAP_CONTENT;
         window.setAttributes(params);
         window.setWindowAnimations(R.style.DIALOG_ANIM);
+    }
+
+    @OnClick(R.id.rl_select_img)
+    public void selectPic() {
+        dismiss();
+        PictureSelector.create((Activity) context)
+                .openGallery(PictureMimeType.ofImage())
+                .maxSelectNum(1)
+                .imageSpanCount(4)
+                .loadImageEngine(GlideEngine.createGlideEngine())
+                .enableCrop(true)
+                .withAspectRatio(w, h)
+                .rotateEnabled(false)
+                .forResult(PictureConfig.CHOOSE_REQUEST);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        if(colorSelectedListener != null) {
+            colorSelectedListener.colorSelect(position, colorArr[position]);
+        }
+        dismiss();
+    }
+
+    public void setOnColorSelectedListener(OnColorSelectedListener listener) {
+        this.colorSelectedListener = listener;
+    }
+
+    public interface OnColorSelectedListener {
+        void colorSelect(int pos, String color);
     }
 }

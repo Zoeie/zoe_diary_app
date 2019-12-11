@@ -70,7 +70,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="30dp"
                 android:textStyle="bold"
-                android:textColor="@color/color_black"
+                android:textColor="@android:color/white"
                 android:textSize="50sp"
                 tools:text="11" />
 
@@ -80,7 +80,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_month_num_in_solid"
                 android:layout_marginStart="28dp"
-                android:textColor="@color/color_black"
+                android:textColor="@android:color/white"
                 android:textSize="20sp"
                 tools:text="DEC" />
 

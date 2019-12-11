@@ -6,8 +6,10 @@ import android.graphics.drawable.GradientDrawable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
 
 import com.zoe.diary.R;
+import com.zoe.diary.utils.DisplayUtil;
 import com.zoe.diary.utils.LogUtil;
 
 public class DiaryColorAdapter extends BaseAdapter {
@@ -38,9 +40,11 @@ public class DiaryColorAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = View.inflate(context, R.layout.diary_color, null);
+        TextView tvColor = view.findViewById(R.id.tv_color);
         GradientDrawable drawable = new GradientDrawable();
         drawable.setColor(Color.parseColor(res[position]));
-        view.setBackground(drawable);
+        drawable.setCornerRadius(DisplayUtil.dip2px(context, 20));
+        tvColor.setBackground(drawable);
         return view;
     }
 }

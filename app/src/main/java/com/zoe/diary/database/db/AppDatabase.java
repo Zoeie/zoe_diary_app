@@ -7,9 +7,11 @@ import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.zoe.diary.app.DiaryApplication;
+import com.zoe.diary.database.dao.DiaryColorDao;
 import com.zoe.diary.database.dao.DiaryContentDao;
 import com.zoe.diary.database.dao.DiaryImgDao;
 import com.zoe.diary.database.dao.DiaryTagDao;
+import com.zoe.diary.database.domain.DiaryColor;
 import com.zoe.diary.database.domain.DiaryInfo;
 import com.zoe.diary.database.domain.ImgInfo;
 import com.zoe.diary.database.domain.TagInfo;
@@ -20,12 +22,13 @@ import com.zoe.diary.database.domain.TagInfo;
  */
 
 //entities表示要包含哪些表；version为数据库的版本，数据库升级时更改；exportSchema是否导出数据库结构，默认为true
-@Database(entities = {DiaryInfo.class, ImgInfo.class, TagInfo.class}, version = 1, exportSchema = false)
+@Database(entities = {DiaryInfo.class, ImgInfo.class, TagInfo.class, DiaryColor.class}, version = 1, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
     public abstract DiaryContentDao getDiaryContentDao();
     public abstract DiaryTagDao getDiaryTagDao();
     public abstract DiaryImgDao getDiaryImgDao();
+    public abstract DiaryColorDao getDiaryColorDao();
 
     //单例
     public static AppDatabase getDatabase() {
