@@ -122,7 +122,7 @@ public class CalendarFragment extends BaseFragment implements BaseQuickAdapter.O
             month = arguments.getInt(KEY_MONTH);
         }
         computerDayList();
-        dayAdapter = new DayAdapter(dayList, getActivity());
+        dayAdapter = new DayAdapter(dayList, getActivity(), year, month);
         dayAdapter.setOnItemChildClickListener(this);
         rvDate.setAdapter(dayAdapter);
     }

@@ -6,6 +6,8 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:textColor="@android:color/black"
+    android:gravity="center"
+    android:drawableBottom="@drawable/black_vertical_line"
     tools:text="1">
 
 </TextView>
