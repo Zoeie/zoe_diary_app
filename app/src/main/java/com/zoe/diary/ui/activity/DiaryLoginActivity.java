@@ -81,6 +81,7 @@ public class DiaryLoginActivity extends BaseActivity {
 
             @Override
             public void onError(Platform platform, int i, Throwable throwable) {
+                throwable.printStackTrace();
                 LogUtil.d("onError i = " + i);
             }
 

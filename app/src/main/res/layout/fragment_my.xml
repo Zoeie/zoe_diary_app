@@ -33,7 +33,7 @@
             android:layout_height="60dp"
             android:background="@drawable/diary_user_login_bg"
             android:layout_centerVertical="true"
-            android:src="@mipmap/diary_app_icon" />
+            android:src="@mipmap/my_setting_diary" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -95,7 +95,7 @@
         android:id="@+id/user_theme"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:icon="@mipmap/ic_launcher"
+        app:icon="@mipmap/my_setting_day_and_night"
         app:title="日间模式/夜间模式" />
 
     <com.zoe.diary.ui.widget.UserSettingItem
