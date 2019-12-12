@@ -1,6 +1,7 @@
 package com.zoe.diary;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -16,7 +17,6 @@ import com.luck.picture.lib.entity.LocalMedia;
 import com.zoe.diary.constant.Constants;
 import com.zoe.diary.database.DbManager;
 import com.zoe.diary.database.domain.DiaryColor;
-import com.zoe.diary.database.domain.DiaryInfo;
 import com.zoe.diary.net.request.diary.DiaryContract;
 import com.zoe.diary.net.request.diary.DiaryPresenter;
 import com.zoe.diary.net.response.DiaryListResponse;
@@ -30,8 +30,10 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import skin.support.content.res.SkinCompatResources;
+import skin.support.widget.SkinCompatSupportable;
 
-public class DiaryActivity extends BaseMVPActivity<DiaryPresenter, DiaryContract.IView> implements DiaryContract.IView {
+public class DiaryActivity extends BaseMVPActivity<DiaryPresenter, DiaryContract.IView> implements DiaryContract.IView , SkinCompatSupportable {
 
     @BindView(R.id.bnv_main)
     BottomNavigationView navigationView;
@@ -151,6 +153,13 @@ public class DiaryActivity extends BaseMVPActivity<DiaryPresenter, DiaryContract
                     }
                     break;
             }
+        }
+    }
+
+    @Override
+    public void applySkin() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(SkinCompatResources.getInstance().getColor(R.color.colorPrimary));
         }
     }
 }

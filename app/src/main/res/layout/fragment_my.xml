@@ -97,6 +97,13 @@
         app:title="系统通知" />
 
     <com.zoe.diary.ui.widget.UserSettingItem
+        android:id="@+id/user_theme"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:icon="@mipmap/ic_launcher"
+        app:title="日间模式/夜间模式" />
+
+    <com.zoe.diary.ui.widget.UserSettingItem
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:icon="@mipmap/ic_launcher"

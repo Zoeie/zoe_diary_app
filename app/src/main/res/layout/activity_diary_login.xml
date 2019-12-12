@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="20dp"
+            android:src="@mipmap/diary_back_icon"
+            android:tint="@color/color_1A000000" />
+
+        <TextView
+            android:id="@+id/tv_page_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="登录"
+            android:textColor="@color/color_black"
+            android:textSize="16sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/color_1A000000" />
+    </RelativeLayout>
+
+    <!--<ImageView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:src="@mipmap/diary_app_icon" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:paddingEnd="20dp"
+        android:paddingStart="20dp">
+
+        <TextView
+            android:id="@+id/tv_account_label"
+            android:textColor="@color/color_black"
+            android:layout_centerVertical="true"
+            android:gravity="end"
+            android:layout_width="45dp"
+            android:layout_height="wrap_content"
+            android:text="用户名" />
+
+        <EditText
+            android:textSize="14sp"
+            android:textCursorDrawable="@color/color_black"
+            android:layout_toEndOf="@id/tv_account_label"
+            android:id="@+id/et_input_account"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:layout_marginStart="20dp" />
+
+        <View
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="20dp"
+            android:layout_toEndOf="@id/tv_account_label"
+            android:background="@color/color_1A000000"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:paddingEnd="20dp"
+        android:paddingStart="20dp">
+
+        <TextView
+            android:id="@+id/tv_password_label"
+            android:textColor="@color/color_black"
+            android:layout_centerVertical="true"
+            android:layout_width="45dp"
+            android:gravity="end"
+            android:layout_height="wrap_content"
+            android:text="密码" />
+
+        <EditText
+            android:textSize="14sp"
+            android:layout_toEndOf="@id/tv_password_label"
+            android:id="@+id/et_input_password"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:layout_marginStart="20dp" />
+
+        <View
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="20dp"
+            android:layout_toEndOf="@id/tv_password_label"
+            android:background="@color/color_1A000000"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+    </RelativeLayout>-->
+
+    <TextView
+        android:id="@+id/tv_qq"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="QQ"
+        android:textColor="@color/color_black"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/tv_we_chat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="微信"
+        android:textColor="@color/color_black"
+        android:textSize="20sp" />
+</LinearLayout>
