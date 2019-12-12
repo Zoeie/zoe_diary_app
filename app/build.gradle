@@ -105,8 +105,8 @@ MobSDK {
         //平台配置信息
         devInfo {
             Wechat {
-                appId "wx4868b35061f87885"
-                appSecret "64020361b8ec4c99936c0e3999a9f249"
+                appId "wxd4596a91d58d3d59"
+                appSecret "dc6f46e8998fa3162444ba533ea8a6c2"
             }
             QQ {
                 appId "1110123864"
