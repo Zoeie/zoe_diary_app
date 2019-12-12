@@ -28,10 +28,12 @@
 
         <ImageView
             android:id="@+id/iv_user_icon"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:padding="10dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/diary_user_login_bg"
             android:layout_centerVertical="true"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@mipmap/diary_app_icon" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -47,53 +49,46 @@
     <com.zoe.diary.ui.widget.UserSettingItem
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:icon="@mipmap/ic_launcher"
-        app:sub_icon="@mipmap/ic_launcher"
+        app:icon="@mipmap/my_setting_backup"
+        app:sub_icon="@mipmap/my_setting_sub_icon_money"
         app:title="日记备份及恢复" />
 
     <com.zoe.diary.ui.widget.UserSettingItem
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:icon="@mipmap/ic_launcher"
+        app:icon="@mipmap/my_setting_lock"
         app:title="日记锁设置" />
 
     <com.zoe.diary.ui.widget.UserSettingItem
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:icon="@mipmap/ic_launcher"
+        app:icon="@mipmap/my_setting_clock"
         app:message="21:00"
         app:title="提醒写日记" />
 
     <com.zoe.diary.ui.widget.UserSettingItem
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:icon="@mipmap/ic_launcher"
+        app:icon="@mipmap/my_setting_font"
         app:title="字体设置" />
 
     <com.zoe.diary.ui.widget.UserSettingItem
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:icon="@mipmap/ic_launcher"
-        app:sub_icon="@mipmap/ic_launcher"
+        app:icon="@mipmap/my_setting_export"
+        app:sub_icon="@mipmap/my_setting_sub_icon_money"
         app:title="导出日记" />
 
     <com.zoe.diary.ui.widget.UserSettingItem
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:icon="@mipmap/ic_launcher"
+        app:icon="@mipmap/my_setting_vip"
         app:title="高级账户" />
 
     <com.zoe.diary.ui.widget.UserSettingItem
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:icon="@mipmap/ic_launcher"
-        app:sub_title="精选淘宝无门槛优惠券"
-        app:title="每日商城" />
-
-    <com.zoe.diary.ui.widget.UserSettingItem
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:icon="@mipmap/ic_launcher"
+        app:icon="@mipmap/my_setting_message"
         app:title="系统通知" />
 
     <com.zoe.diary.ui.widget.UserSettingItem
@@ -106,6 +101,6 @@
     <com.zoe.diary.ui.widget.UserSettingItem
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:icon="@mipmap/ic_launcher"
+        app:icon="@mipmap/my_setting_about_us"
         app:title="关于我们" />
 </LinearLayout>
