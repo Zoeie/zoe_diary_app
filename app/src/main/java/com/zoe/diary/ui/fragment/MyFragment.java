@@ -3,6 +3,7 @@ package com.zoe.diary.ui.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
@@ -13,11 +14,13 @@ import com.zoe.diary.utils.LogUtil;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import skin.support.SkinCompatManager;
 
 public class MyFragment extends BaseFragment {
 
     private static final String KEY_TAG = "KEY_TAG";
     private String tag = "";
+    private boolean flag = true;
 
     public static MyFragment getInstance(String tag) {
         LogUtil.d("tag:" + tag);
@@ -54,5 +57,17 @@ public class MyFragment extends BaseFragment {
     @OnClick(R.id.iv_user_icon)
     public void login() {
         startActivity(new Intent(getActivity(), DiaryLoginActivity.class));
+    }
+
+    @OnClick(R.id.user_theme)
+    public void switchTheme() {
+        if(flag) {
+            Toast.makeText(getActivity(), "夜间模式", Toast.LENGTH_SHORT).show();
+            SkinCompatManager.getInstance().loadSkin("skin_one.skin", SkinCompatManager.SKIN_LOADER_STRATEGY_ASSETS);
+        } else {
+            Toast.makeText(getActivity(), "日间模式", Toast.LENGTH_SHORT).show();
+            SkinCompatManager.getInstance().restoreDefaultTheme();
+        }
+        flag = !flag;
     }
 }

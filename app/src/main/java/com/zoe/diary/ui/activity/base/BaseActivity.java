@@ -2,8 +2,11 @@ package com.zoe.diary.ui.activity.base;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.app.SkinAppCompatDelegateImpl;
 
 import com.zoe.diary.notify.DataObservable;
 
@@ -47,4 +50,10 @@ public abstract class BaseActivity extends AppCompatActivity implements Observer
 
     @Override
     public void update(Observable o, Object arg) {}
+
+    @NonNull
+    @Override
+    public AppCompatDelegate getDelegate() {
+        return SkinAppCompatDelegateImpl.get(this, this);
+    }
 }

@@ -10,6 +10,8 @@ import android.widget.ImageView;
 
 import com.zoe.diary.R;
 
+import skin.support.content.res.SkinCompatResources;
+
 public class DiaryIconAdapter extends BaseAdapter {
 
     private Context context;
@@ -43,7 +45,8 @@ public class DiaryIconAdapter extends BaseAdapter {
         iv.setImageResource(res[position]);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             iv.setImageTintList(ColorStateList.valueOf(context.getResources()
-                    .getColor(targetPos == position ? R.color.colorPrimary:R.color.color_B3000000)));
+                    .getColor(targetPos == position ? SkinCompatResources.getInstance().getColor(R.color.colorPrimary):
+                            R.color.color_B3000000)));
         }
         return iv;
     }
