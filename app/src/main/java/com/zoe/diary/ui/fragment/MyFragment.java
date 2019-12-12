@@ -63,7 +63,7 @@ public class MyFragment extends BaseFragment {
     public void switchTheme() {
         if(flag) {
             Toast.makeText(getActivity(), "夜间模式", Toast.LENGTH_SHORT).show();
-            SkinCompatManager.getInstance().loadSkin("skin_one.skin", SkinCompatManager.SKIN_LOADER_STRATEGY_ASSETS);
+            SkinCompatManager.getInstance().loadSkin("night.skin", SkinCompatManager.SKIN_LOADER_STRATEGY_ASSETS);
         } else {
             Toast.makeText(getActivity(), "日间模式", Toast.LENGTH_SHORT).show();
             SkinCompatManager.getInstance().restoreDefaultTheme();
