@@ -1,8 +1,40 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.mob.sdk'
+
+/**
+ * 读取版本配置
+ */
+Properties mVersionProps = getProperty()
+/**
+ * 读取版本名
+ */
+String mVersionCode = mVersionProps['VERSION_CODE']
+/**
+ * 读取版本名
+ */
+String mVersionName = mVersionProps['VERSION_NAME']
+/**
+ * 构建编号
+ */
+String mBuildCode = String.valueOf(mVersionProps['BUILD_CODE'])
+/**
+ * 编译apk文件名称
+ */
+String mBuildName = String.valueOf(mVersionProps['BUILD_NAME'])
 
 android {
     compileSdkVersion 28
     buildToolsVersion "29.0.2"
+
+    signingConfigs {
+        release {
+            storeFile file('docs/diary.jks')
+            storePassword "android"
+            keyAlias "zoe_diary"
+            keyPassword "android"
+        }
+    }
+
     defaultConfig {
         applicationId "com.zoe.diary"
         minSdkVersion 19
@@ -20,13 +52,69 @@ android {
     }
     buildTypes {
         release {
+            signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+
+        debug {
+            signingConfig signingConfigs.release
+        }
     }
+
+    //移除lint检测的error
+    lintOptions {
+        abortOnError false
+    }
+    flavorDimensions 'main'
+    productFlavors {
+        zoe_diary {
+            dimension 'main'
+            // 每个环境包名不同
+            applicationId "com.zoe.diary"
+        }
+    }
+
+    // 自定义输出配置，这里我们加上APK版本号1.0
+    android.applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            outputFileName = "${mBuildName}_v${defaultConfig.versionName}_${mBuildCode}_${variant.productFlavors[0].name}.apk"
+        }
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+/**
+ * 获取构建版本
+ * @return
+ */
+def getProperty() {
+    Properties buildProps = new Properties()
+    buildProps.load(new FileInputStream(file('docs/build.properties')))
+    return buildProps
+}
+
+MobSDK {
+    appKey "2d71b95f55386"
+    appSecret "24a99e3a52c25e87e89bb48fd4d33160"
+    ShareSDK {
+        //平台配置信息
+        devInfo {
+            Wechat {
+                appId "wx4868b35061f87885"
+                appSecret "64020361b8ec4c99936c0e3999a9f249"
+            }
+            QQ {
+                appId "1110123864"
+                appKey "kYfAClzc8ikQgSbM"
+                shareByAppClient true
+            }
+        }
+       gui false //Onekeyshare是ShareSDK的GUI界面，如果不需要，则需要添加"gui false"
     }
 }
 
