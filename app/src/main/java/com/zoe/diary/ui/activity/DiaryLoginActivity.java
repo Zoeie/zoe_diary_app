@@ -50,12 +50,12 @@ public class DiaryLoginActivity extends BaseActivity {
         finish();
     }
 
-    @OnClick(R.id.tv_qq)
+    @OnClick(R.id.iv_qq)
     public void onQQClick() {
         loginWithThirdPart(QQ.NAME);
     }
 
-    @OnClick(R.id.tv_we_chat)
+    @OnClick(R.id.iv_we_chat)
     public void onWeChatClick() {
         loginWithThirdPart(Wechat.NAME);
     }
