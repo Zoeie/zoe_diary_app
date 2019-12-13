@@ -179,7 +179,7 @@ public class DiaryEditActivity extends BaseMVPActivity<SavePresenter, SaveContra
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, month, day);
         String title = etInputTitle.getText().toString();
-        long createTime = calendar.getTimeInMillis();
+        long createTime = Calendar.getInstance().getTimeInMillis();
         int mood = this.mood;
         int weather = this.weather;
         List<String> tag = new ArrayList<>();
