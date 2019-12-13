@@ -47,14 +47,12 @@ public class DiaryActivity extends BaseMVPActivity<DiaryPresenter, DiaryContract
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    LogUtil.d("navigation_home lastFragment:" + lastFragment);
                     if (lastFragment != 0) {
                         switchFragment(lastFragment, 0);
                         lastFragment = 0;
                     }
                     return true;
                 case R.id.navigation_user:
-                    LogUtil.d("navigation_user lastFragment:" + lastFragment);
                     if (lastFragment != 1) {
                         switchFragment(lastFragment, 1);
                         lastFragment = 1;
@@ -116,7 +114,6 @@ public class DiaryActivity extends BaseMVPActivity<DiaryPresenter, DiaryContract
         if (!fragmentList[index].isAdded()) {
             transaction.add(R.id.fl_main, fragmentList[index]);
         }
-        LogUtil.d("lastFragment:" + lastFragment + ",index:" + index);
         //根据角标将fragment显示出来
         transaction.show(fragmentList[index]).commitAllowingStateLoss();
     }
