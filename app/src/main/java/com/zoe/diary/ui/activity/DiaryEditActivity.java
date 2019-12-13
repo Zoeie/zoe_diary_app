@@ -95,8 +95,8 @@ public class DiaryEditActivity extends BaseMVPActivity<SavePresenter, SaveContra
     private int year;
     private int month;
     private int day;
-    private int mood = Constants.MOOD_TYPE.MOOD_3;
-    private int weather = Constants.WEATHER_TYPE.WEATHER_3;
+    private int mood = Constants.MOOD_TYPE.MOOD_6;
+    private int weather = Constants.WEATHER_TYPE.WEATHER_0;
     private int dayOfWeek;
     private int diaryId;
     private int selectPicPos = 0;

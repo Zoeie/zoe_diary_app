@@ -45,7 +45,7 @@ public class DiaryIconAdapter extends BaseAdapter {
         iv.setImageResource(res[position]);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             iv.setImageTintList(ColorStateList.valueOf(context.getResources()
-                    .getColor(targetPos == position ? SkinCompatResources.getInstance().getColor(R.color.colorPrimary):
+                    .getColor(targetPos == position ? R.color.colorPrimary:
                             R.color.color_B3000000)));
         }
         return iv;
