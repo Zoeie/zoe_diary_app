@@ -156,7 +156,7 @@ public class DiaryActivity extends BaseMVPActivity<DiaryPresenter, DiaryContract
     @Override
     public void applySkin() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().setStatusBarColor(SkinCompatResources.getInstance().getColor(R.color.colorPrimary));
+            getWindow().setStatusBarColor(SkinCompatResources.getInstance().getColor(R.color.colorPrimaryDark));
         }
     }
 }
