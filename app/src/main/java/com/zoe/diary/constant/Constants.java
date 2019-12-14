@@ -1,6 +1,9 @@
 package com.zoe.diary.constant;
 
 public class Constants {
+
+    public static final String DIARY_SP_NAME = "DIARY_SP";
+
     public static final class TYPE {
         public static final int MOOD = 1;
         public static final int WEATHER = 2;
@@ -55,5 +58,11 @@ public class Constants {
 
     public static final class MSG {
         public static final int NEW_DIARY_NOTIFY = 0x10001;
+        public static final int NOTIFY_REGISTER_SUCCESS = 0x10002;
+        public static final int NOTIFY_LOGIN_SUCCESS = 0x10003;
+    }
+
+    public static final class KEY {
+        public static final String USER_ID = "USER_ID";
     }
 }

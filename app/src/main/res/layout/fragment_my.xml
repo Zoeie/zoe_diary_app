@@ -36,6 +36,7 @@
             android:src="@mipmap/my_setting_diary" />
 
         <TextView
+            android:id="@+id/tv_login_subtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -79,11 +80,11 @@
         app:sub_icon="@mipmap/my_setting_sub_icon_money"
         app:title="导出日记" />
 
-    <com.zoe.diary.ui.widget.UserSettingItem
+    <!--<com.zoe.diary.ui.widget.UserSettingItem
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:icon="@mipmap/my_setting_vip"
-        app:title="高级账户" />
+        app:title="高级账户" />-->
 
     <com.zoe.diary.ui.widget.UserSettingItem
         android:layout_width="match_parent"
@@ -103,4 +104,18 @@
         android:layout_height="wrap_content"
         app:icon="@mipmap/my_setting_about_us"
         app:title="关于我们" />
+
+    <TextView
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:padding="15dp"
+        android:textSize="18sp"
+        android:textColor="@color/color_black"
+        android:background="@drawable/logout_bg"
+        android:id="@+id/btn_logout"
+        android:text="登出"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 </LinearLayout>

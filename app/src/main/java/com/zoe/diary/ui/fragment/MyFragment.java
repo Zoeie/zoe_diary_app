@@ -2,15 +2,22 @@ package com.zoe.diary.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
 import com.zoe.diary.R;
+import com.zoe.diary.constant.Constants;
+import com.zoe.diary.net.response.info.UserInfo;
 import com.zoe.diary.ui.activity.DiaryLoginActivity;
 import com.zoe.diary.ui.fragment.base.BaseFragment;
+import com.zoe.diary.ui.activity.DiaryUserActivity;
 import com.zoe.diary.utils.LogUtil;
+import com.zoe.diary.utils.SharePreferencesUtil;
+
+import java.util.Observable;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -21,6 +28,9 @@ public class MyFragment extends BaseFragment {
     private static final String KEY_TAG = "KEY_TAG";
     private String tag = "";
     private boolean flag = true;
+
+    @BindView(R.id.tv_login_subtitle)
+    TextView tvLoginSubtitle;
 
     public static MyFragment getInstance(String tag) {
         LogUtil.d("tag:" + tag);
@@ -46,7 +56,8 @@ public class MyFragment extends BaseFragment {
     }
 
     private void initView() {
-
+        String userId = SharePreferencesUtil.getString(getActivity(), Constants.KEY.USER_ID, "");
+        tvLoginSubtitle.setText(TextUtils.isEmpty(userId) ? "未登录":"已登录");
     }
 
     @Override
@@ -56,7 +67,13 @@ public class MyFragment extends BaseFragment {
 
     @OnClick(R.id.iv_user_icon)
     public void login() {
-        startActivity(new Intent(getActivity(), DiaryLoginActivity.class));
+        String userId = SharePreferencesUtil.getString(getActivity(), Constants.KEY.USER_ID, "");
+        LogUtil.d("login userId："+userId);
+        if(TextUtils.isEmpty(userId)) {
+            startActivity(new Intent(getActivity(), DiaryLoginActivity.class));
+        } else {
+            startActivity(new Intent(getContext(), DiaryUserActivity.class));
+        }
     }
 
     @OnClick(R.id.user_theme)
@@ -69,5 +86,23 @@ public class MyFragment extends BaseFragment {
             SkinCompatManager.getInstance().restoreDefaultTheme();
         }
         flag = !flag;
+    }
+
+    @Override
+    public void update(Observable observable, Object data) {
+        super.update(observable, data);
+        if (data instanceof Integer) {
+            int msg = (int) data;
+            if (msg == Constants.MSG.NOTIFY_REGISTER_SUCCESS
+                    || msg == Constants.MSG.NOTIFY_LOGIN_SUCCESS) {
+                tvLoginSubtitle.setText("已登录");
+            }
+        }
+    }
+
+    @OnClick(R.id.btn_logout)
+    public void logOut() {
+        SharePreferencesUtil.putString(getActivity(), Constants.KEY.USER_ID,"");
+        tvLoginSubtitle.setText("未登录");
     }
 }

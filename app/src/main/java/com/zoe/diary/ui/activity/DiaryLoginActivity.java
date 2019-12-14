@@ -1,36 +1,53 @@
 package com.zoe.diary.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.widget.EditText;
 
 import androidx.annotation.Nullable;
 
 import com.zoe.diary.R;
+import com.zoe.diary.constant.Constants;
+import com.zoe.diary.net.request.user.login.LoginContract;
+import com.zoe.diary.net.request.user.login.LoginPresenter;
+import com.zoe.diary.net.request.user.register.RegisterContract;
+import com.zoe.diary.net.request.user.register.RegisterPresenter;
+import com.zoe.diary.net.response.UserInfoResponse;
+import com.zoe.diary.notify.DataObservable;
 import com.zoe.diary.ui.activity.base.BaseActivity;
+import com.zoe.diary.ui.activity.base.BaseMVPActivity;
 import com.zoe.diary.utils.LogUtil;
+import com.zoe.diary.utils.SharePreferencesUtil;
+import com.zoe.diary.utils.ToastUtils;
 
 import java.util.HashMap;
-import java.util.Set;
 
+import butterknife.BindView;
 import butterknife.OnClick;
 import cn.sharesdk.framework.Platform;
 import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.tencent.qq.QQ;
 import cn.sharesdk.wechat.friends.Wechat;
-import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
 
 /**
  * author zoe
  * created 2019/12/12 9:33
  */
 
-public class DiaryLoginActivity extends BaseActivity {
+public class DiaryLoginActivity  extends BaseMVPActivity<LoginPresenter, LoginContract.IView> implements LoginContract.IView {
+
+    @BindView(R.id.et_input_account)
+    EditText etAccount;
+
+    @BindView(R.id.et_input_password)
+    EditText etPassword;
+
+    @Override
+    protected LoginPresenter createPresenter() {
+        return new LoginPresenter();
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -54,6 +71,12 @@ public class DiaryLoginActivity extends BaseActivity {
 
     @OnClick(R.id.iv_back)
     public void onBack() {
+        finish();
+    }
+
+    @OnClick(R.id.tv_register)
+    public void register() {
+        startActivity(new Intent(this, DiaryRegisterActivity.class));
         finish();
     }
 
@@ -106,4 +129,28 @@ public class DiaryLoginActivity extends BaseActivity {
         plat.showUser(null);
     }
 
+    @OnClick(R.id.btn_login)
+    public void login() {
+        String account = etAccount.getText().toString();
+        String password = etPassword.getText().toString();
+        if (TextUtils.isEmpty(account) || TextUtils.isEmpty(password)) {
+            ToastUtils.showDebug("用户名和密码不能为空");
+            return;
+        }
+        mPresenter.login(account, password);
+    }
+
+    @Override
+    public void onLoginSuccess(UserInfoResponse response) {
+        if(response.data != null) {
+            DataObservable.getInstance().setData(Constants.MSG.NOTIFY_LOGIN_SUCCESS);
+            SharePreferencesUtil.putString(this, Constants.KEY.USER_ID, response.data.userId);
+            finish();
+        }
+    }
+
+    @Override
+    public void onLoginFailed() {
+
+    }
 }
