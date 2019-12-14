@@ -17,6 +17,13 @@ import cn.sharesdk.framework.PlatformActionListener;
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.tencent.qq.QQ;
 import cn.sharesdk.wechat.friends.Wechat;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * author zoe
@@ -57,7 +64,11 @@ public class DiaryLoginActivity extends BaseActivity {
 
     @OnClick(R.id.iv_we_chat)
     public void onWeChatClick() {
-        loginWithThirdPart(Wechat.NAME);
+//        loginWithThirdPart(Wechat.NAME);
+        Platform plat = ShareSDK.getPlatform(QQ.NAME);
+        LogUtil.d("xxx 1="+(plat.isClientValid()));
+        LogUtil.d("xxx 2="+(plat.isAuthValid()));
+
     }
 
     private void loginWithThirdPart(String name) {
@@ -70,13 +81,16 @@ public class DiaryLoginActivity extends BaseActivity {
         plat.setPlatformActionListener(new PlatformActionListener() {
             @Override
             public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
-                LogUtil.d("onComplete i = " + i);
-                Set<String> strings = hashMap.keySet();
-                for (String key : strings) {
-                    Object o = hashMap.get(key);
-                    LogUtil.e("key:"+key);
-                    LogUtil.d("o:"+o);
-                }
+                String userId = platform.getDb().getUserId();
+                String userIcon = platform.getDb().getUserIcon();
+                long expiresTime = platform.getDb().getExpiresTime();
+                String userName = platform.getDb().getUserName();
+                String token = platform.getDb().getToken();
+                LogUtil.d("xxx userId:" + userId);
+                LogUtil.d("xxx userIcon:" + userIcon);
+                LogUtil.d("xxx expiresTime:" + expiresTime);
+                LogUtil.d("xxx userName:" + userName);
+                LogUtil.d("xxx token:" + token);
             }
 
             @Override
@@ -91,7 +105,7 @@ public class DiaryLoginActivity extends BaseActivity {
             }
         });
         //抖音登录适配安卓9.0
-        ShareSDK.setActivity(this);
+        //ShareSDK.setActivity(this);
         //要数据不要功能，主要体现在不会重复出现授权界面
         plat.showUser(null);
     }

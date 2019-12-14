@@ -44,7 +44,6 @@ public class DiaryFragment extends BaseFragment {
     private DiaryAdapter diaryAdapter;
 
     public static DiaryFragment getInstance(String tag) {
-        LogUtil.d("tag:" + tag);
         DiaryFragment diaryFragment = new DiaryFragment();
         Bundle bundle = new Bundle();
         bundle.putString(KEY_TAG, tag);
