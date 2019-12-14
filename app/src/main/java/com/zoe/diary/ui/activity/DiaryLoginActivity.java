@@ -64,11 +64,7 @@ public class DiaryLoginActivity extends BaseActivity {
 
     @OnClick(R.id.iv_we_chat)
     public void onWeChatClick() {
-//        loginWithThirdPart(Wechat.NAME);
-        Platform plat = ShareSDK.getPlatform(QQ.NAME);
-        LogUtil.d("xxx 1="+(plat.isClientValid()));
-        LogUtil.d("xxx 2="+(plat.isAuthValid()));
-
+        loginWithThirdPart(Wechat.NAME);
     }
 
     private void loginWithThirdPart(String name) {
