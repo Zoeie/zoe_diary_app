@@ -22,6 +22,7 @@ import com.zoe.diary.utils.SharePreferencesUtil;
 import com.zoe.diary.utils.ToastUtils;
 
 import java.util.HashMap;
+import java.util.Observable;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -77,7 +78,17 @@ public class DiaryLoginActivity  extends BaseMVPActivity<LoginPresenter, LoginCo
     @OnClick(R.id.tv_register)
     public void register() {
         startActivity(new Intent(this, DiaryRegisterActivity.class));
-        finish();
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        super.update(o, arg);
+        if (arg instanceof Integer) {
+            int value = (int) arg;
+            if (value == Constants.MSG.NOTIFY_REGISTER_SUCCESS) {
+                finish();
+            }
+        }
     }
 
     @OnClick(R.id.iv_qq)
