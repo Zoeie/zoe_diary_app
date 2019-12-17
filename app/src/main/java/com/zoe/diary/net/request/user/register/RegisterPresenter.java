@@ -17,7 +17,7 @@ public class RegisterPresenter extends BasePresenter<RegisterContract.IView> imp
     private RegisterModel mModel = new RegisterModel();
 
     @Override
-    public void register(String userName, String password) {
+    public void register(String userName, String password,String nickName) {
         RxObserver<UserInfoResponse> observer = new RxObserver<UserInfoResponse>() {
             @Override
             protected void onSuccess(UserInfoResponse response) {
@@ -32,6 +32,6 @@ public class RegisterPresenter extends BasePresenter<RegisterContract.IView> imp
             }
         };
         addDisposable(observer);
-        mModel.register(userName, password).subscribe(observer);
+        mModel.register(userName, password, nickName).subscribe(observer);
     }
 }

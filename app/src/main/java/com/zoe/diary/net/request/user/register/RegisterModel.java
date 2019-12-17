@@ -1,7 +1,6 @@
 package com.zoe.diary.net.request.user.register;
 
 import com.zoe.diary.net.base.DiaryBaseModel;
-import com.zoe.diary.net.response.DiaryListResponse;
 import com.zoe.diary.net.response.UserInfoResponse;
 
 import io.reactivex.Observable;
@@ -16,8 +15,10 @@ import io.reactivex.schedulers.Schedulers;
 
 public class RegisterModel extends DiaryBaseModel {
 
-    public Observable<UserInfoResponse> register(String userName, String password) {
-        return doRxRequest().registerSelf(userName, password)
+    public Observable<UserInfoResponse> register(String userName,
+                                                 String password,
+                                                 String nickName) {
+        return doRxRequest().registerOrdinary(userName, password,nickName)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

@@ -1,9 +1,10 @@
 package com.zoe.diary.net.response.info;
 
-import java.io.Serializable;
-
-public class UserInfo implements Serializable {
+public class UserInfo {
+    public String headPortrait;
+    public String userName;
+    public String nickName;
+    public boolean bindQQ;
+    public boolean bindWeChat;
     public String userId;
-    public String platform;
-    public String user_icon;
 }

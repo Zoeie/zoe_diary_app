@@ -58,7 +58,7 @@ public class DiaryRegisterActivity extends BaseMVPActivity<RegisterPresenter, Re
             ToastUtils.showDebug("用户名和密码不能为空");
             return;
         }
-        mPresenter.register(account, password);
+        mPresenter.register(account, password, account);
     }
 
     @Override
@@ -69,7 +69,7 @@ public class DiaryRegisterActivity extends BaseMVPActivity<RegisterPresenter, Re
     @Override
     public void onRegisterSuccess(UserInfoResponse response) {
         if(response.data != null) {
-            ToastUtils.showDebug("注册成功:"+response.data.userId);
+            ToastUtils.showDebug("注册成功:" + response.data.userName);
             SharePreferencesUtil.putString(this, Constants.KEY.USER_ID, response.data.userId);
             DataObservable.getInstance().setData(Constants.MSG.NOTIFY_REGISTER_SUCCESS);
             finish();

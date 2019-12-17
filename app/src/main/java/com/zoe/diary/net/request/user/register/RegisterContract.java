@@ -11,7 +11,7 @@ import com.zoe.diary.net.response.UserInfoResponse;
 public interface RegisterContract {
 
     interface IPresenter extends IContract.IPresenter<RegisterContract.IView> {
-        void register(String userName, String password);
+        void register(String userName, String password,String nickName);
     }
 
     interface IView extends IContract.IView {

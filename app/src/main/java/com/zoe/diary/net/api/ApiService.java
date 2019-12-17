@@ -35,9 +35,10 @@ public interface ApiService {
     Observable<DiarySaveResponse> save(@Body RequestBody body);
 
     @FormUrlEncoded
-    @POST("user/reg_self")
-    Observable<UserInfoResponse> registerSelf(@Field("userName") String userName,
-                                              @Field("password") String password);
+    @POST("user/ref_ordinary")
+    Observable<UserInfoResponse> registerOrdinary(@Field("userName") String userName,
+                                                  @Field("password") String password,
+                                                  @Field("nickName") String nickName);
 
     @FormUrlEncoded
     @POST("user/login")
