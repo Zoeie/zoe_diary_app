@@ -41,8 +41,12 @@ public interface ApiService {
                                                   @Field("nickName") String nickName);
 
     @FormUrlEncoded
-    @POST("user/login")
+    @POST("user/login_ordinary")
     Observable<UserInfoResponse> login(@Field("userName") String userName,
                                        @Field("password") String password);
+
+    @FormUrlEncoded
+    @POST("user/login_third")
+    Observable<UserInfoResponse> loginByThird(@FieldMap Map<String, String> map);
 
 }

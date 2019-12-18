@@ -164,4 +164,9 @@ public class DiaryLoginActivity  extends BaseMVPActivity<LoginPresenter, LoginCo
     public void onLoginFailed() {
 
     }
+
+    @Override
+    public void onLoginByThirdSuccess(UserInfoResponse response) {
+
+    }
 }

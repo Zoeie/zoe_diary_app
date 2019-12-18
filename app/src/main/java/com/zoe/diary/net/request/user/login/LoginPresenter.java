@@ -27,10 +27,31 @@ public class LoginPresenter extends BasePresenter<LoginContract.IView> implement
 
             @Override
             protected void onFail(int errorCode, String errorMsg) {
-
+                if(getView() != null) {
+                    getView().onLoginFailed();
+                }
             }
         };
         addDisposable(observer);
         mModel.login(userName, password).subscribe(observer);
+    }
+
+    @Override
+    public void loginByThird(String userName, String thirdKey, int thirdType, String nickName, String headPortrait) {
+        RxObserver<UserInfoResponse> observer = new RxObserver<UserInfoResponse>() {
+            @Override
+            protected void onSuccess(UserInfoResponse response) {
+                if (getView() != null) {
+                    getView().onLoginByThirdSuccess(response);
+                }
+            }
+
+            @Override
+            protected void onFail(int errorCode, String errorMsg) {
+                getView().onLoginFailed();
+            }
+        };
+        addDisposable(observer);
+        mModel.loginByThird(userName, thirdKey, thirdType, nickName, headPortrait).subscribe(observer);
     }
 }

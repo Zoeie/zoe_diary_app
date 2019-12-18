@@ -3,6 +3,7 @@ package com.zoe.diary.ui.activity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
@@ -18,6 +19,7 @@ import com.zoe.diary.ui.activity.base.BaseActivity;
 import com.zoe.diary.ui.activity.base.BaseMVPActivity;
 import com.zoe.diary.utils.SharePreferencesUtil;
 import com.zoe.diary.utils.ToastUtils;
+import com.zoe.diary.utils.ValidateUtil;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -56,6 +58,10 @@ public class DiaryRegisterActivity extends BaseMVPActivity<RegisterPresenter, Re
         String password = etPassword.getText().toString();
         if (TextUtils.isEmpty(account) || TextUtils.isEmpty(password)) {
             ToastUtils.showDebug("用户名和密码不能为空");
+            return;
+        }
+        if (!ValidateUtil.validateEmail(account)) {
+            ToastUtils.showDebug("邮箱不合法");
             return;
         }
         mPresenter.register(account, password, account);
