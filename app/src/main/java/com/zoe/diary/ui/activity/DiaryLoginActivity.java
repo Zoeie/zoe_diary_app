@@ -28,6 +28,7 @@ public class DiaryLoginActivity extends BaseActivity implements LoginFragment.On
 
     @BindView(R.id.tv_page_title)
     TextView tvPageTitle;
+    private BindAccountFragment accountFragment;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,7 +40,7 @@ public class DiaryLoginActivity extends BaseActivity implements LoginFragment.On
     private void initView() {
         LoginFragment loginFragment = LoginFragment.getInstance();
         loginFragment.setOnGoToBindAccountListener(this);
-        BindAccountFragment accountFragment = BindAccountFragment.getInstance();
+        accountFragment = BindAccountFragment.getInstance();
         fragmentList = new Fragment[]{loginFragment, accountFragment};
         lastFragment = 0;
         //设置默认页面为headFragment
@@ -88,6 +89,7 @@ public class DiaryLoginActivity extends BaseActivity implements LoginFragment.On
 
     @Override
     public void gotoBindAccount(ThirdPart part) {
+        accountFragment.setPart(part);
         //调整到绑定账号的界面
         switchIndex(1);
     }

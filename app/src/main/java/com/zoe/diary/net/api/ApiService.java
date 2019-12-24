@@ -3,6 +3,7 @@ package com.zoe.diary.net.api;
 import com.zoe.diary.net.response.DiaryListResponse;
 import com.zoe.diary.net.response.DiarySaveResponse;
 import com.zoe.diary.net.response.UserInfoResponse;
+import com.zoe.diary.net.response.base.BaseResponse;
 import com.zoe.diary.net.response.info.UserInfo;
 
 import java.util.List;
@@ -48,5 +49,9 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("user/login_third")
     Observable<UserInfoResponse> loginByThird(@FieldMap Map<String, String> map);
+
+    @FormUrlEncoded
+    @POST("user/getCode")
+    Observable<BaseResponse> sendCode(@Field("userName") String userName);
 
 }
