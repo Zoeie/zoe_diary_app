@@ -270,6 +270,20 @@ public class CalendarFragment extends BaseFragment implements BaseQuickAdapter.O
                 showCalendar = !showCalendar;
                 isExecuteAnim = false;
             }
+
+            @Override
+            public void onAnimationStart(Animator animation) {
+                super.onAnimationStart(animation);
+                isExecuteAnim = true;
+                doHalfAlready = false;
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                showCalendar = !showCalendar;
+                isExecuteAnim = false;
+            }
         });
         rotateAnimator.start();
     }
