@@ -86,4 +86,9 @@ public class DiaryRegisterActivity extends BaseMVPActivity<RegisterPresenter, Re
     public void onRegisterFailed() {
 
     }
+
+    @OnClick(R.id.iv_back)
+    public void onBack() {
+        finish();
+    }
 }
