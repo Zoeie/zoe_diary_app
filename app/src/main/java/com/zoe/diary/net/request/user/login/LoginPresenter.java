@@ -2,8 +2,6 @@ package com.zoe.diary.net.request.user.login;
 
 import com.zoe.diary.net.base.BasePresenter;
 import com.zoe.diary.net.base.RxObserver;
-import com.zoe.diary.net.request.user.register.RegisterContract;
-import com.zoe.diary.net.request.user.register.RegisterModel;
 import com.zoe.diary.net.response.UserInfoResponse;
 
 /**
@@ -27,13 +25,32 @@ public class LoginPresenter extends BasePresenter<LoginContract.IView> implement
 
             @Override
             protected void onFail(int errorCode, String errorMsg) {
-                if(getView() != null) {
+                if (getView() != null) {
                     getView().onLoginFailed();
                 }
             }
         };
         addDisposable(observer);
         mModel.login(userName, password).subscribe(observer);
+    }
+
+    @Override
+    public void isBind(String thirdKey) {
+        RxObserver<UserInfoResponse> observer = new RxObserver<UserInfoResponse>() {
+            @Override
+            protected void onSuccess(UserInfoResponse response) {
+                if (getView() != null) {
+                    getView().onBind(response);
+                }
+            }
+
+            @Override
+            protected void onFail(int errorCode, String errorMsg) {
+
+            }
+        };
+        addDisposable(observer);
+        mModel.isBind(thirdKey).subscribe(observer);
     }
 
     @Override

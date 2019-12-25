@@ -7,12 +7,16 @@ import android.widget.EditText;
 import androidx.annotation.Nullable;
 
 import com.zoe.diary.R;
+import com.zoe.diary.constant.Constants;
 import com.zoe.diary.entity.ThirdPart;
 import com.zoe.diary.net.request.user.third.ThirdContract;
 import com.zoe.diary.net.request.user.third.ThirdPresenter;
 import com.zoe.diary.net.response.UserInfoResponse;
 import com.zoe.diary.net.response.base.BaseResponse;
+import com.zoe.diary.net.response.info.UserInfo;
+import com.zoe.diary.notify.DataObservable;
 import com.zoe.diary.ui.fragment.base.BaseMVPFragment;
+import com.zoe.diary.utils.SharePreferencesUtil;
 import com.zoe.diary.utils.ToastUtils;
 import com.zoe.diary.utils.ValidateUtil;
 
@@ -109,7 +113,17 @@ public class BindAccountFragment extends BaseMVPFragment<ThirdPresenter, ThirdCo
 
     @Override
     public void onRegisterSuccess(UserInfoResponse response) {
-        ToastUtils.showDebug("绑定成功");
+        UserInfo data = response.data;
+        if (data.getStatus() == 0) {
+            ToastUtils.showDebug("绑定成功");
+            DataObservable.getInstance().setData(Constants.MSG.NOTIFY_LOGIN_SUCCESS);
+            if (getActivity() != null) {
+                SharePreferencesUtil.putString(getActivity(), Constants.KEY.USER_ID, response.data.userId);
+                getActivity().finish();
+            }
+        } else {
+            ToastUtils.showDebug(data.getMsg());
+        }
     }
 
     @Override

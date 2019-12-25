@@ -12,11 +12,13 @@ public interface LoginContract {
 
     interface IPresenter extends IContract.IPresenter<LoginContract.IView> {
         void login(String userName, String password);
+        void isBind(String thirdKey);
         void loginByThird(String userName, String thirdKey, int thirdType, String nickName, String headPortrait);
     }
 
     interface IView extends IContract.IView {
         void onLoginSuccess(UserInfoResponse response);
+        void onBind(UserInfoResponse response);
         void onLoginFailed();
         void onLoginByThirdSuccess(UserInfoResponse response);
     }

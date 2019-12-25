@@ -46,6 +46,8 @@ public class LoginFragment extends BaseMVPFragment<LoginPresenter, LoginContract
 
     private OnGoToBindAccountListener onGoToBindAccountListener;
 
+    private ThirdPart part;
+
     public static LoginFragment getInstance() {
         LoginFragment fragment = new LoginFragment();
         Bundle bundle = new Bundle();
@@ -112,10 +114,8 @@ public class LoginFragment extends BaseMVPFragment<LoginPresenter, LoginContract
                 LogUtil.d("xxx expiresTime:" + expiresTime);
                 LogUtil.d("xxx userName:" + userName);
                 LogUtil.d("xxx token:" + token);
-                ThirdPart part = new ThirdPart(userId, userIcon, userName);
-                if (onGoToBindAccountListener != null) {
-                    onGoToBindAccountListener.gotoBindAccount(part);
-                }
+                part = new ThirdPart(userId, userIcon, userName);
+                mPresenter.isBind(userId);
             }
 
             @Override
@@ -153,6 +153,23 @@ public class LoginFragment extends BaseMVPFragment<LoginPresenter, LoginContract
             if(getActivity() != null) {
                 SharePreferencesUtil.putString(getActivity(), Constants.KEY.USER_ID, response.data.userId);
                 getActivity().finish();
+            }
+        }
+    }
+
+    @Override
+    public void onBind(UserInfoResponse response) {
+        if (response.data != null) {
+            if (response.data.getStatus() == 0) {
+                DataObservable.getInstance().setData(Constants.MSG.NOTIFY_LOGIN_SUCCESS);
+                if (getActivity() != null) {
+                    SharePreferencesUtil.putString(getActivity(), Constants.KEY.USER_ID, response.data.userId);
+                    getActivity().finish();
+                }
+            } else {
+                if (onGoToBindAccountListener != null) {
+                    onGoToBindAccountListener.gotoBindAccount(part);
+                }
             }
         }
     }

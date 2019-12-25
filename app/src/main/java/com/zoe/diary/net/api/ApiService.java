@@ -4,22 +4,17 @@ import com.zoe.diary.net.response.DiaryListResponse;
 import com.zoe.diary.net.response.DiarySaveResponse;
 import com.zoe.diary.net.response.UserInfoResponse;
 import com.zoe.diary.net.response.base.BaseResponse;
-import com.zoe.diary.net.response.info.UserInfo;
 
-import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Observable;
-import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
-import retrofit2.http.Multipart;
 import retrofit2.http.POST;
-import retrofit2.http.Part;
 
 /**
  * author zoe
@@ -36,7 +31,7 @@ public interface ApiService {
     Observable<DiarySaveResponse> save(@Body RequestBody body);
 
     @FormUrlEncoded
-    @POST("user/ref_ordinary")
+    @POST("user/reg_ordinary")
     Observable<UserInfoResponse> registerOrdinary(@Field("userName") String userName,
                                                   @Field("password") String password,
                                                   @Field("nickName") String nickName);
@@ -47,11 +42,19 @@ public interface ApiService {
                                        @Field("password") String password);
 
     @FormUrlEncoded
+    @POST("user/info")
+    Observable<UserInfoResponse> getInfo(@Field("id") String id);
+
+    @FormUrlEncoded
     @POST("user/login_third")
     Observable<UserInfoResponse> loginByThird(@FieldMap Map<String, String> map);
 
     @FormUrlEncoded
     @POST("user/getCode")
     Observable<BaseResponse> sendCode(@Field("userName") String userName);
+
+    @FormUrlEncoded
+    @POST("user/isBind")
+    Observable<UserInfoResponse> isBind(@Field("thirdKey") String thirdKey);
 
 }

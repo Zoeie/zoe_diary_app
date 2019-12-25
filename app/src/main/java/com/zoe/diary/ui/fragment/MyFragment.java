@@ -72,7 +72,9 @@ public class MyFragment extends BaseFragment {
         if(TextUtils.isEmpty(userId)) {
             startActivity(new Intent(getActivity(), DiaryLoginActivity.class));
         } else {
-            startActivity(new Intent(getContext(), DiaryUserActivity.class));
+            Intent intent = new Intent(getContext(), DiaryUserActivity.class);
+            intent.putExtra(DiaryUserActivity.KEY_ID, userId);
+            startActivity(intent);
         }
     }
 

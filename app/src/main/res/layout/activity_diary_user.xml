@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_1A000000"
+    android:background="@color/color_white"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -24,7 +24,7 @@
             tools:text="用户中心" />
 
         <ImageView
-            android:id="@+id/iv_save_diary"
+            android:id="@+id/iv_back"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_centerVertical="true"

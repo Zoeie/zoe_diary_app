@@ -39,6 +39,7 @@ public class ThirdPresenter extends BasePresenter<ThirdContract.IView> implement
         RxObserver<UserInfoResponse> observer = new RxObserver<UserInfoResponse>() {
             @Override
             protected void onSuccess(UserInfoResponse response) {
+                if(response.data == null) return;
                 if (getView() != null) {
                     getView().onRegisterSuccess(response);
                 }

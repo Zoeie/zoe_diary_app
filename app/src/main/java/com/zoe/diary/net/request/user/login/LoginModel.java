@@ -36,4 +36,10 @@ public class LoginModel extends DiaryBaseModel {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
+    public Observable<UserInfoResponse> isBind(String thirdKey) {
+        return doRxRequest().isBind(thirdKey)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
 }
